@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Image from "next/image";
 import { getPageBySlug } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
@@ -28,7 +29,17 @@ export default async function Page() {
             </a>
           )}
 
-          <div className="pb-16 whitespace-pre-line leading-relaxed opacity-90">{page.body}</div>
+          <div className="whitespace-pre-line leading-relaxed opacity-90">{page.body}</div>
+
+          <div className="mt-8 bg-white rounded-2xl p-4 md:p-6">
+            <Image
+              src="/federation-structure-chart.webp"
+              alt="საქართველოს ჯუდოს ეროვნული ფედერაციის ორგანიზაციული სტრუქტურა"
+              width={727}
+              height={828}
+              className="w-full h-auto"
+            />
+          </div>
         </div>
       </main>
       <Footer />
