@@ -1,0 +1,56 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AdminLoginPage() {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    });
+    setLoading(false);
+    if (res.ok) {
+      router.push("/admin");
+      router.refresh();
+    } else {
+      setError("არასწორი პაროლი");
+    }
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-ink px-5">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm bg-ink-2 border border-line rounded-2xl p-7">
+        <div className="w-10 h-10 rounded-md bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center font-black mb-5">ჯ</div>
+        <h1 className="font-serif font-bold text-xl mb-1">Admin შესვლა</h1>
+        <p className="text-sm opacity-55 mb-6">საქართველოს ჯუდოს ფედერაცია</p>
+
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-2">პაროლი</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm mb-2 outline-none focus:border-gold"
+          autoFocus
+        />
+        {error && <p className="text-crimson text-sm mb-2">{error}</p>}
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-crimson rounded-lg py-2.5 font-bold text-sm mt-4 disabled:opacity-50"
+        >
+          {loading ? "..." : "შესვლა"}
+        </button>
+      </form>
+    </div>
+  );
+}

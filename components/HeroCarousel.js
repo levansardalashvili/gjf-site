@@ -1,0 +1,127 @@
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
+const INTERVAL_MS = 5000;
+
+export default function HeroCarousel({ news, fullBleed = false }) {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (news.length <= 1 || paused) return;
+    const timer = setInterval(() => {
+      setActive((i) => (i + 1) % news.length);
+    }, INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, [news.length, paused]);
+
+  if (news.length === 0) return null;
+
+  function goPrev() {
+    setActive((i) => (i - 1 + news.length) % news.length);
+  }
+  function goNext() {
+    setActive((i) => (i + 1) % news.length);
+  }
+
+  const containerClass = fullBleed
+    ? "relative overflow-hidden h-[440px] md:h-[560px] w-full"
+    : "relative rounded-3xl overflow-hidden border border-line h-[440px] md:h-[500px]";
+
+  return (
+    <div
+      className={containerClass}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {news.map((item, i) => (
+        <div
+          key={item.slug}
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            i === active ? "opacity-100 z-10" : "opacity-0 z-0"
+          }`}
+        >
+          {item.image_url ? (
+            <>
+              {/* ოდნავ ბუნდოვანი, გაზრდილი ასლი ავსებს მთელ ფონს */}
+              <Image
+                src={item.image_url}
+                alt=""
+                fill
+                aria-hidden="true"
+                className="object-cover blur-lg scale-105 opacity-70"
+              />
+              {/* რეალური ფოტო სრულად, დაუჭრელად — აქტიურ სლაიდზე ნელი zoom (Ken Burns) */}
+              <Image
+                key={i === active ? `active-${item.slug}` : item.slug}
+                src={item.image_url}
+                alt={item.title}
+                fill
+                priority={i === 0}
+                className={`object-contain ${i === active ? "ken-burns" : ""}`}
+              />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]" />
+          )}
+          {/* კითხვადობისთვის ბნელი გრადიენტი ტექსტის ქვეშ */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+
+          <Link href={`/news/${item.slug}`} className="absolute inset-0 flex flex-col justify-end">
+            <div className="max-w-[1400px] w-full mx-auto px-5 md:px-8 pb-10 md:pb-14">
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-2.5 mb-3">
+                  {item.medal && (
+                    <span className="bg-gold text-ink text-xs font-extrabold px-2.5 py-1 rounded-full">{item.medal}</span>
+                  )}
+                  <span className="text-xs uppercase tracking-widest text-gold font-bold">{item.date}</span>
+                </div>
+                <h2 className="font-serif font-bold text-2xl md:text-4xl leading-tight text-offwhite">
+                  {item.title}
+                </h2>
+              </div>
+            </div>
+          </Link>
+        </div>
+      ))}
+
+      {news.length > 1 && (
+        <>
+          <button
+            onClick={goPrev}
+            aria-label="წინა სიახლე"
+            className="absolute left-4 md:left-7 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-ink/50 hover:bg-ink/75 hover:scale-110 border border-offwhite/20 flex items-center justify-center text-offwhite backdrop-blur-sm transition-all duration-300"
+          >
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+          <button
+            onClick={goNext}
+            aria-label="შემდეგი სიახლე"
+            className="absolute right-4 md:right-7 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-ink/50 hover:bg-ink/75 hover:scale-110 border border-offwhite/20 flex items-center justify-center text-offwhite backdrop-blur-sm transition-all duration-300"
+          >
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+        </>
+      )}
+
+      {news.length > 1 && (
+        <div className="absolute bottom-6 md:bottom-8 left-0 right-0 z-20">
+          <div className="max-w-[1400px] mx-auto px-5 md:px-8 flex justify-end gap-2">
+            {news.map((item, i) => (
+              <button
+                key={item.slug}
+                onClick={() => setActive(i)}
+                aria-label={`სიახლე ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === active ? "w-7 bg-gold" : "w-1.5 bg-offwhite/40 hover:bg-offwhite/70"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

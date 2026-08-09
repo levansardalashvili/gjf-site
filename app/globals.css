@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;900&family=Noto+Serif+Georgian:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #14171c;
+  color: #faf7f0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- ანიმაციები --- */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+/* დაყოვნებები, რომ ბადეში ბარათები თანმიმდევრობით "ცოცხდებოდნენ" */
+.reveal-delay-1.is-visible { animation-delay: 0.08s; }
+.reveal-delay-2.is-visible { animation-delay: 0.16s; }
+.reveal-delay-3.is-visible { animation-delay: 0.24s; }
+.reveal-delay-4.is-visible { animation-delay: 0.32s; }
+.reveal-delay-5.is-visible { animation-delay: 0.4s; }
+
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+.ken-burns {
+  animation: kenBurns 6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .ken-burns {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
