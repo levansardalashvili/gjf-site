@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
       <form onSubmit={handleSubmit} className="w-full max-w-sm bg-ink-2 border border-line rounded-2xl p-7">
         <div className="w-10 h-10 rounded-md bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center font-black mb-5">ჯ</div>
         <h1 className="font-serif font-bold text-xl mb-1">Admin შესვლა</h1>
-        <p className="text-sm opacity-55 mb-6">საქართველოს ჯუდოს ფედერაცია</p>
+        <p className="text-sm opacity-55 mb-6">საქართველოს ძიუდოს ფედერაცია</p>
 
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-2">ელფოსტა</label>
         <input

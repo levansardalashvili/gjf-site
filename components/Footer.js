@@ -26,9 +26,9 @@ export default function Footer() {
           {/* ბრენდის ბლოკი */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/logo.png" alt="საქართველოს ჯუდოს ფედერაცია" width={99} height={125} className="h-10 w-auto" />
+              <Image src="/logo.png" alt="საქართველოს ძიუდოს ფედერაცია" width={99} height={125} className="h-10 w-auto" />
               <span className="font-serif font-bold text-base leading-tight">
-                საქართველოს<br />ჯუდოს ფედერაცია
+                საქართველოს<br />ძიუდოს ფედერაცია
               </span>
             </div>
             <p className="text-sm opacity-55 leading-relaxed max-w-xs">
@@ -84,8 +84,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-5 border-t border-line flex justify-between items-center flex-wrap gap-2 text-xs opacity-45">
-          <span>© {new Date().getFullYear()} საქართველოს ჯუდოს ფედერაცია</span>
-          <span className="text-gold/70">ჯუდო · ძალა · პატივისცემა</span>
+          <span>© {new Date().getFullYear()} საქართველოს ძიუდოს ფედერაცია</span>
+          <span className="text-gold/70">ძიუდო · ძალა · პატივისცემა</span>
         </div>
       </div>
     </footer>

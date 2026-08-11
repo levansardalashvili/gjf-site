@@ -4,7 +4,7 @@ const LINKS = [
     title: "შედეგების პორტალი",
     desc: "ტურნირების ოფიციალური შედეგები და რეიტინგები",
     logo: "/logos/jm-portal-black.svg",
-    logoBg: "bg-white",
+    logoBg: "bg-white border border-line",
     logoClass: "h-5 md:h-6 w-auto",
   },
   {

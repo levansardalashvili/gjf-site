@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const SECTIONS = [
-  { title: "ძიუდოს განვითარების ისტორია", desc: "ჯუდოს განვითარების ისტორია საქართველოში.", href: "/judo/history" },
+  { title: "ძიუდოს განვითარების ისტორია", desc: "ძიუდოს განვითარების ისტორია საქართველოში.", href: "/judo/history" },
   { title: "არქივი", desc: "ისტორიული მასალების არქივი.", href: "/judo/archive" },
   { title: "სტატისტიკა", desc: "ისტორიული სტატისტიკური მონაცემები.", href: "/judo/statistic" },
 ];

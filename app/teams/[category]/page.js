@@ -9,7 +9,7 @@ export const revalidate = 0;
 export function generateMetadata({ params }) {
   const team = getTeamCategory(params.category);
   if (!team) return {};
-  return { title: `${team.label} — ნაკრები — საქართველოს ჯუდოს ფედერაცია` };
+  return { title: `${team.label} — ნაკრები — საქართველოს ძიუდოს ფედერაცია` };
 }
 
 export default async function TeamCategoryPage({ params }) {

@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
   const project = await getProjectBySlug(params.slug);
   if (!project) return {};
   return {
-    title: `${project.title} — საქართველოს ჯუდოს ფედერაცია`,
+    title: `${project.title} — საქართველოს ძიუდოს ფედერაცია`,
     description: project.excerpt,
   };
 }

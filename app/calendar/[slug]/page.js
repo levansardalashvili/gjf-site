@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   const event = await getEventBySlug(params.slug);
   if (!event) return {};
   return {
-    title: `${event.title} — საქართველოს ჯუდოს ფედერაცია`,
+    title: `${event.title} — საქართველოს ძიუდოს ფედერაცია`,
     description: event.description,
     openGraph: { title: event.title, description: event.description, type: "article" },
   };

@@ -21,7 +21,7 @@ export default async function ClubsPage({ searchParams }) {
         <div className="pt-10 pb-7">
           <div className="text-sm opacity-50 mb-3.5">მთავარი / ფედერაცია / კლუბები</div>
           <h1 className="font-serif font-bold text-3xl md:text-4xl mb-2">კლუბები და რეგიონები</h1>
-          <p className="opacity-60 max-w-lg">იპოვეთ უახლოესი ჯუდოს კლუბი საქართველოს რეგიონებში.</p>
+          <p className="opacity-60 max-w-lg">იპოვეთ უახლოესი ძიუდოს კლუბი საქართველოს რეგიონებში.</p>
         </div>
 
         <div className="pb-16">

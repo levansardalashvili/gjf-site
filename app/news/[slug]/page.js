@@ -11,7 +11,7 @@ export async function generateMetadata({ params }) {
   const item = await getNewsBySlug(params.slug);
   if (!item) return {};
   return {
-    title: `${item.title} — საქართველოს ჯუდოს ფედერაცია`,
+    title: `${item.title} — საქართველოს ძიუდოს ფედერაცია`,
     description: item.excerpt,
     openGraph: { title: item.title, description: item.excerpt, type: "article" },
   };
@@ -34,7 +34,7 @@ export default async function NewsDetailPage({ params }) {
         <article className="py-6">
           <div className="text-xs opacity-55 mb-3 uppercase tracking-wide">{item.date}</div>
           {item.medal && (
-            <span className="inline-block bg-gold text-ink text-xs font-extrabold px-2.5 py-1 rounded-full mb-4">{item.medal}</span>
+            <span className="inline-block bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full mb-4">{item.medal}</span>
           )}
           <h1 className="font-serif font-bold text-3xl md:text-4xl leading-tight mb-6">{item.title}</h1>
           {item.image_url ? (

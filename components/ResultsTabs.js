@@ -52,7 +52,7 @@ export default function ResultsTabs({ results }) {
                   className="block bg-ink-2 border border-line rounded-2xl p-5 h-full hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
                 >
                   {r.medal && (
-                    <span className="inline-block bg-gold text-ink text-xs font-extrabold px-2.5 py-1 rounded-full mb-3">
+                    <span className="inline-block bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full mb-3">
                       {r.medal}
                     </span>
                   )}

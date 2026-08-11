@@ -15,7 +15,7 @@ export default function PartnersStrip({ partners }) {
               <Wrapper
                 key={p.id}
                 {...wrapperProps}
-                className="relative aspect-[4/3] bg-white rounded-xl overflow-hidden hover:scale-105 hover:shadow-xl transition-all duration-300"
+                className="relative aspect-[4/3] bg-white border border-line rounded-xl overflow-hidden hover:scale-105 hover:shadow-xl transition-all duration-300"
               >
                 <Image src={p.logo_url} alt={p.name} fill className="object-contain p-4" />
               </Wrapper>

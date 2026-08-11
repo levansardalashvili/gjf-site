@@ -67,18 +67,18 @@ export default function HeroCarousel({ news, fullBleed = false }) {
             <div className="absolute inset-0 bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]" />
           )}
           {/* კითხვადობისთვის ბნელი გრადიენტი ტექსტის ქვეშ */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#14171c] via-[#14171c]/40 to-transparent" />
 
           <Link href={`/news/${item.slug}`} className="absolute inset-0 flex flex-col justify-end">
             <div className="max-w-[1400px] w-full mx-auto px-5 md:px-8 pb-10 md:pb-14">
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2.5 mb-3">
                   {item.medal && (
-                    <span className="bg-gold text-ink text-xs font-extrabold px-2.5 py-1 rounded-full">{item.medal}</span>
+                    <span className="bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full">{item.medal}</span>
                   )}
                   <span className="text-xs uppercase tracking-widest text-gold font-bold">{item.date}</span>
                 </div>
-                <h2 className="font-serif font-bold text-2xl md:text-4xl leading-tight text-offwhite">
+                <h2 className="font-serif font-bold text-2xl md:text-4xl leading-tight text-[#faf7f0]">
                   {item.title}
                 </h2>
               </div>
@@ -92,14 +92,14 @@ export default function HeroCarousel({ news, fullBleed = false }) {
           <button
             onClick={goPrev}
             aria-label="წინა სიახლე"
-            className="absolute left-4 md:left-7 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-ink/50 hover:bg-ink/75 hover:scale-110 border border-offwhite/20 flex items-center justify-center text-offwhite backdrop-blur-sm transition-all duration-300"
+            className="absolute left-4 md:left-7 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#14171c]/50 hover:bg-[#14171c]/75 hover:scale-110 border border-[#faf7f0]/20 flex items-center justify-center text-[#faf7f0] backdrop-blur-sm transition-all duration-300"
           >
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
           <button
             onClick={goNext}
             aria-label="შემდეგი სიახლე"
-            className="absolute right-4 md:right-7 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-ink/50 hover:bg-ink/75 hover:scale-110 border border-offwhite/20 flex items-center justify-center text-offwhite backdrop-blur-sm transition-all duration-300"
+            className="absolute right-4 md:right-7 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#14171c]/50 hover:bg-[#14171c]/75 hover:scale-110 border border-[#faf7f0]/20 flex items-center justify-center text-[#faf7f0] backdrop-blur-sm transition-all duration-300"
           >
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </button>
@@ -115,7 +115,7 @@ export default function HeroCarousel({ news, fullBleed = false }) {
                 onClick={() => setActive(i)}
                 aria-label={`სიახლე ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === active ? "w-7 bg-gold" : "w-1.5 bg-offwhite/40 hover:bg-offwhite/70"
+                  i === active ? "w-7 bg-gold" : "w-1.5 bg-[#faf7f0]/40 hover:bg-[#faf7f0]/70"
                 }`}
               />
             ))}

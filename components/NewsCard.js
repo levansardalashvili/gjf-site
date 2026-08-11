@@ -10,7 +10,7 @@ export default function NewsCard({ slug, date, title, medal, image_url }) {
       <div className="relative aspect-[16/10] bg-gradient-to-br from-[#2a2f38] to-[#1a1d23] shrink-0">
         {image_url && <Image src={image_url} alt={title} fill className="object-cover" />}
         {medal && (
-          <span className="absolute top-3 left-3 bg-gold text-ink text-xs font-extrabold px-2.5 py-1 rounded-full z-10">
+          <span className="absolute top-3 left-3 bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full z-10">
             {medal}
           </span>
         )}

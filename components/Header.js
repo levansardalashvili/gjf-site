@@ -14,8 +14,11 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-50 bg-ink/90 backdrop-blur border-b border-line">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between px-5 py-3.5">
-          <Link href="/" className="flex items-center shrink-0">
-            <Image src="/logo.png" alt="საქართველოს ჯუდოს ფედერაცია" width={99} height={125} className="h-9 w-auto" priority />
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
+            <Image src="/logo.png" alt="საქართველოს ძიუდოს ფედერაცია" width={99} height={125} className="h-9 w-auto" priority />
+            <span className="hidden sm:block text-xs md:text-sm font-semibold leading-tight whitespace-nowrap">
+              საქართველოს ძიუდოს ფედერაცია
+            </span>
           </Link>
 
           {/* Desktop nav — hover-dropdown */}
@@ -72,7 +75,7 @@ export default function Header() {
         }`}
       >
         <div className="flex justify-between items-center mb-6">
-          <Image src="/logo.png" alt="საქართველოს ჯუდოს ფედერაცია" width={99} height={125} className="h-8 w-auto" />
+          <Image src="/logo.png" alt="საქართველოს ძიუდოს ფედერაცია" width={99} height={125} className="h-8 w-auto" />
           <button
             onClick={() => setOpen(false)}
             className="w-[38px] h-[38px] border border-line rounded-lg flex items-center justify-center"
