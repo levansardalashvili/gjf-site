@@ -1,20 +1,47 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
-export default function EventForm({ initial, id }) {
+const MONTHS_FULL = ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"];
+const MONTHS_SHORT = ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
+
+function formatDateRange(startISO, endISO) {
+  if (!startISO) return "";
+  const start = new Date(startISO + "T00:00:00");
+  const end = endISO ? new Date(endISO + "T00:00:00") : null;
+
+  const sd = start.getDate();
+  const sm = start.getMonth();
+  const sy = start.getFullYear();
+
+  if (!end || startISO === endISO) {
+    return `${sd} ${MONTHS_FULL[sm]} ${sy}`;
+  }
+
+  const ed = end.getDate();
+  const em = end.getMonth();
+  const ey = end.getFullYear();
+
+  if (sy !== ey) return `${sd} ${MONTHS_FULL[sm]} ${sy} - ${ed} ${MONTHS_FULL[em]} ${ey}`;
+  if (sm !== em) return `${sd} ${MONTHS_FULL[sm]} - ${ed} ${MONTHS_FULL[em]} ${sy}`;
+  return `${sd}-${ed} ${MONTHS_FULL[sm]} ${sy}`;
+}
+
+export default function EventForm({ initial, id, defaultCategory }) {
   const isEdit = Boolean(id);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [form, setForm] = useState({
     slug: initial?.slug || "",
     day: initial?.day || "",
     month: initial?.month || "",
     date_range: initial?.date_range || "",
-    tag: initial?.tag || "",
+    tag: initial?.tag || (defaultCategory === "georgia" ? "ეროვნული" : "საერთაშორისო"),
     title: initial?.title || "",
     location: initial?.location || "",
-    category: initial?.category || "international",
+    category: initial?.category || defaultCategory || "international",
     description: initial?.description || "",
   });
   const [saving, setSaving] = useState(false);
@@ -24,6 +51,24 @@ export default function EventForm({ initial, id }) {
   function update(key, value) {
     setForm((f) => ({ ...f, [key]: value }));
   }
+
+  // კატეგორიის მიხედვით ტეგი ავტომატურად
+  useEffect(() => {
+    update("tag", form.category === "georgia" ? "ეროვნული" : "საერთაშორისო");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.category]);
+
+  // თარიღების არჩევისას day/month/date_range ავტომატურად გამოითვლება
+  useEffect(() => {
+    if (!startDate) return;
+    const d = new Date(startDate + "T00:00:00");
+    setForm((f) => ({
+      ...f,
+      day: String(d.getDate()),
+      month: MONTHS_SHORT[d.getMonth()],
+      date_range: formatDateRange(startDate, endDate || startDate),
+    }));
+  }, [startDate, endDate]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -38,7 +83,7 @@ export default function EventForm({ initial, id }) {
     });
     setSaving(false);
     if (res.ok) {
-      router.push("/admin/events");
+      router.push(`/admin/events/${form.category}`);
       router.refresh();
     } else {
       const data = await res.json();
@@ -52,24 +97,39 @@ export default function EventForm({ initial, id }) {
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">Slug (ლათინურად, უნიკალური)</label>
         <input className={FIELD_CLASS} value={form.slug} onChange={(e) => update("slug", e.target.value)} required />
       </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">დღე (მაგ. 16)</label>
-          <input className={FIELD_CLASS} value={form.day} onChange={(e) => update("day", e.target.value)} required />
+          <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">დაწყების თარიღი</label>
+          <input
+            type="date"
+            className={FIELD_CLASS}
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            required
+          />
         </div>
         <div>
-          <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">თვე (მაგ. აპრ)</label>
-          <input className={FIELD_CLASS} value={form.month} onChange={(e) => update("month", e.target.value)} required />
+          <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">დასრულების თარიღი</label>
+          <input
+            type="date"
+            className={FIELD_CLASS}
+            value={endDate}
+            min={startDate || undefined}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
         </div>
       </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სრული თარიღის დიაპაზონი</label>
-        <input className={FIELD_CLASS} placeholder="16-19 აპრილი 2026" value={form.date_range} onChange={(e) => update("date_range", e.target.value)} required />
-      </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">ტეგი (მაგ. საერთაშორისო / გრან სლემი / ეროვნული)</label>
-        <input className={FIELD_CLASS} value={form.tag} onChange={(e) => update("tag", e.target.value)} required />
-      </div>
+
+      {form.date_range && (
+        <p className="text-sm text-gold -mt-2">📅 {form.date_range}</p>
+      )}
+      {isEdit && !startDate && form.date_range && (
+        <p className="text-xs opacity-50 -mt-2">
+          ამჟამინდელი თარიღი: {form.date_range} — შესაცვლელად ზემოთ აირჩიე ახალი თარიღები.
+        </p>
+      )}
+
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სათაური</label>
         <input className={FIELD_CLASS} value={form.title} onChange={(e) => update("title", e.target.value)} required />
@@ -84,6 +144,7 @@ export default function EventForm({ initial, id }) {
           <option value="international">საერთაშორისო</option>
           <option value="georgia">საქართველო</option>
         </select>
+        <p className="text-xs opacity-45 mt-1.5">ტეგი ავტომატურად: {form.tag}</p>
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">აღწერა</label>

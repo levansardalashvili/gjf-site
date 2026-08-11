@@ -8,21 +8,29 @@ export default function CalendarTabs({ events }) {
 
   return (
     <>
-      <div className="flex gap-2 border-b border-line mb-6">
+      <div className="flex gap-1 border-b border-line mb-6">
         <button
           onClick={() => setTab("georgia")}
-          className={`px-1.5 py-3 mr-5 text-sm font-semibold border-b-2 ${tab === "georgia" ? "opacity-100 border-gold text-gold" : "opacity-55 border-transparent"}`}
+          className={`px-3.5 py-3 mr-1 text-sm font-semibold border-b-2 rounded-t-lg transition-all duration-300 ${
+            tab === "georgia"
+              ? "opacity-100 border-gold text-gold"
+              : "opacity-55 border-transparent hover:opacity-90 hover:bg-ink-2/50 hover:text-gold"
+          }`}
         >
           საქართველო
         </button>
         <button
           onClick={() => setTab("international")}
-          className={`px-1.5 py-3 mr-5 text-sm font-semibold border-b-2 ${tab === "international" ? "opacity-100 border-gold text-gold" : "opacity-55 border-transparent"}`}
+          className={`px-3.5 py-3 mr-1 text-sm font-semibold border-b-2 rounded-t-lg transition-all duration-300 ${
+            tab === "international"
+              ? "opacity-100 border-gold text-gold"
+              : "opacity-55 border-transparent hover:opacity-90 hover:bg-ink-2/50 hover:text-gold"
+          }`}
         >
           საერთაშორისო
         </button>
       </div>
-      <div className="border-t border-line">
+      <div key={tab} className="tab-fade border-t border-line">
         {filtered.length ? filtered.map((e) => <EventRow key={e.slug} {...e} />) : (
           <p className="opacity-50 py-8 text-sm">ამ კატეგორიაში ღონისძიება არ არის.</p>
         )}

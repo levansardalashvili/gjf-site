@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
 import { getAdminClient } from "@/lib/supabase";
 
-const ALLOWED_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+const ALLOWED_TYPES = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+  "application/vnd.ms-excel", // .xls
+];
 
 export async function POST(request) {
   const formData = await request.formData();
@@ -11,7 +18,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "ფაილი არ მოიძებნა" }, { status: 400 });
   }
   if (!ALLOWED_TYPES.includes(file.type)) {
-    return NextResponse.json({ error: "დაშვებულია მხოლოდ PDF, JPG, PNG ან WEBP" }, { status: 400 });
+    return NextResponse.json({ error: "დაშვებულია მხოლოდ PDF, JPG, PNG, WEBP ან XLSX" }, { status: 400 });
   }
 
   const admin = getAdminClient();

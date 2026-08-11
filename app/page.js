@@ -71,7 +71,7 @@ export default async function Home() {
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 {featuredProjects.map((p, i) => (
                   <Reveal key={p.slug} delay={Math.min(i + 1, 5)}>
-                    <ProjectCard {...p} />
+                    <ProjectCard {...p} index={i} />
                   </Reveal>
                 ))}
               </div>

@@ -4,16 +4,13 @@ import { useRouter } from "next/navigation";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
-export default function ResultForm({ initial, id }) {
+export default function ResultForm({ initial, id, defaultCategory, defaultAgeGroup }) {
   const isEdit = Boolean(id);
   const [form, setForm] = useState({
-    category: initial?.category || "georgia",
-    age_group: initial?.age_group || "standart",
+    category: initial?.category || defaultCategory || "georgia",
+    age_group: initial?.age_group || defaultAgeGroup || "standart",
     event_name: initial?.event_name || "",
     event_date: initial?.event_date || "",
-    weight: initial?.weight || "",
-    athlete: initial?.athlete || "",
-    medal: initial?.medal || "",
     source_url: initial?.source_url || "",
     file_url: initial?.file_url || "",
     file_name: initial?.file_name || "",
@@ -58,7 +55,7 @@ export default function ResultForm({ initial, id }) {
     });
     setSaving(false);
     if (res.ok) {
-      router.push("/admin/results");
+      router.push(`/admin/results/${form.category}/${form.age_group}`);
       router.refresh();
     } else {
       const data = await res.json();
@@ -82,6 +79,7 @@ export default function ResultForm({ initial, id }) {
             <option value="standart">უფროსები</option>
             <option value="youth">ახალგაზრდები</option>
             <option value="kids">ჭაბუკები</option>
+            <option value="women">ქალები</option>
           </select>
         </div>
       </div>
@@ -92,20 +90,6 @@ export default function ResultForm({ initial, id }) {
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">თარიღი</label>
         <input className={FIELD_CLASS} value={form.event_date} onChange={(e) => update("event_date", e.target.value)} />
-      </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">წონითი კატეგორია</label>
-        <input className={FIELD_CLASS} placeholder="-73 კგ" value={form.weight} onChange={(e) => update("weight", e.target.value)} />
-      </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">
-          სპორტსმენი (თუ არ იცი, დატოვე ცარიელი ან ჩაწერე „—")
-        </label>
-        <input className={FIELD_CLASS} value={form.athlete} onChange={(e) => update("athlete", e.target.value)} />
-      </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">მედალი (მაგ. 🥇 ოქრო)</label>
-        <input className={FIELD_CLASS} value={form.medal} onChange={(e) => update("medal", e.target.value)} />
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">

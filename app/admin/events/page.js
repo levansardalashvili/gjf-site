@@ -1,33 +1,30 @@
 import Link from "next/link";
-import { getAllEvents } from "@/lib/queries";
-import DeleteButton from "@/components/admin/DeleteButton";
+import { getAllEvents, getAllCalendarRegulations } from "@/lib/queries";
 
 export const revalidate = 0;
 
-export default async function AdminEventsList() {
+export default async function AdminEventsHub() {
   const events = await getAllEvents();
+  const regulations = await getAllCalendarRegulations();
+  const georgiaCount = events.filter((e) => e.category === "georgia").length;
+  const internationalCount = events.filter((e) => e.category === "international").length;
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-serif font-bold text-2xl">ღონისძიებები</h1>
-        <Link href="/admin/events/new" className="bg-crimson px-4 py-2 rounded-lg text-sm font-bold">+ ახალი</Link>
-      </div>
-
-      <div className="bg-ink-2 border border-line rounded-2xl overflow-hidden">
-        {events.map((e) => (
-          <div key={e.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
-            <div className="min-w-0">
-              <div className="text-xs opacity-50">{e.date_range} · {e.category === "georgia" ? "საქართველო" : "საერთაშორისო"}</div>
-              <div className="font-semibold truncate">{e.title}</div>
-            </div>
-            <div className="flex items-center gap-4 shrink-0">
-              <Link href={`/admin/events/${e.id}`} className="text-sm text-gold font-semibold">რედაქტირება</Link>
-              <DeleteButton endpoint={`/api/events/${e.id}`} confirmText={`წავშალო "${e.title}"?`} />
-            </div>
-          </div>
-        ))}
-        {events.length === 0 && <p className="p-6 text-sm opacity-50">ღონისძიება ჯერ არ არის დამატებული.</p>}
+      <h1 className="font-serif font-bold text-2xl mb-6">კალენდარი</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Link href="/admin/events/georgia" className="bg-ink-2 border border-line rounded-2xl p-5 hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+          <h3 className="font-serif font-bold text-lg mb-1">საქართველო</h3>
+          <p className="text-sm opacity-60">{georgiaCount} ღონისძიება →</p>
+        </Link>
+        <Link href="/admin/events/international" className="bg-ink-2 border border-line rounded-2xl p-5 hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+          <h3 className="font-serif font-bold text-lg mb-1">საერთაშორისო</h3>
+          <p className="text-sm opacity-60">{internationalCount} ღონისძიება →</p>
+        </Link>
+        <Link href="/admin/calendar-regulations" className="bg-ink-2 border border-line rounded-2xl p-5 hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+          <h3 className="font-serif font-bold text-lg mb-1">ფედერაციის დებულებები</h3>
+          <p className="text-sm opacity-60">{regulations.length} დოკუმენტი →</p>
+        </Link>
       </div>
     </div>
   );

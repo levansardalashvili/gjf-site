@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
-export default function TeamMemberForm({ initial, id }) {
+export default function TeamMemberForm({ initial, id, defaultCategory }) {
   const isEdit = Boolean(id);
   const [form, setForm] = useState({
-    category: initial?.category || "standart",
+    category: initial?.category || defaultCategory || "standart",
     weight: initial?.weight || "",
     name: initial?.name || "",
   });
@@ -32,7 +32,7 @@ export default function TeamMemberForm({ initial, id }) {
     });
     setSaving(false);
     if (res.ok) {
-      router.push("/admin/team-members");
+      router.push(`/admin/team-members/${form.category}`);
       router.refresh();
     } else {
       const data = await res.json();

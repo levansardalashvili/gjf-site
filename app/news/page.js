@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import NewsCard from "@/components/NewsCard";
-import Reveal from "@/components/Reveal";
+import NewsGrid from "@/components/NewsGrid";
 import { getAllNews } from "@/lib/queries";
 
 export const revalidate = 60;
@@ -28,13 +27,7 @@ export default async function NewsArchive() {
           ))}
         </div>
 
-        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 pb-8">
-          {news.map((n, i) => (
-            <Reveal key={n.slug} delay={Math.min((i % 5) + 1, 5)}>
-              <NewsCard {...n} />
-            </Reveal>
-          ))}
-        </div>
+        <NewsGrid news={news} />
       </main>
       <Footer />
     </>

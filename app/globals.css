@@ -35,11 +35,37 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tab-fade {
+  animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-48px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(48px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 .reveal {
   opacity: 0;
 }
 .reveal.is-visible {
   animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.reveal.reveal-left.is-visible {
+  animation-name: slideInLeft;
+  animation-duration: 0.8s;
+}
+.reveal.reveal-right.is-visible {
+  animation-name: slideInRight;
+  animation-duration: 0.8s;
 }
 /* დაყოვნებები, რომ ბადეში ბარათები თანმიმდევრობით "ცოცხდებოდნენ" */
 .reveal-delay-1.is-visible { animation-delay: 0.08s; }
@@ -59,6 +85,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal.is-visible,
+  .reveal.reveal-left.is-visible,
+  .reveal.reveal-right.is-visible,
   .ken-burns {
     animation: none !important;
     opacity: 1 !important;
