@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase-browser";
 
 export default function AdminLoginPage() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -12,18 +14,17 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const res = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
+
+    const supabase = createClient();
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+
     setLoading(false);
-    if (res.ok) {
-      router.push("/admin");
-      router.refresh();
-    } else {
-      setError("არასწორი პაროლი");
+    if (signInError) {
+      setError("არასწორი ელფოსტა ან პაროლი");
+      return;
     }
+    router.push("/admin");
+    router.refresh();
   }
 
   return (
@@ -33,13 +34,23 @@ export default function AdminLoginPage() {
         <h1 className="font-serif font-bold text-xl mb-1">Admin შესვლა</h1>
         <p className="text-sm opacity-55 mb-6">საქართველოს ჯუდოს ფედერაცია</p>
 
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-2">ელფოსტა</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm mb-4 outline-none focus:border-gold"
+          autoFocus
+          required
+        />
+
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-2">პაროლი</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm mb-2 outline-none focus:border-gold"
-          autoFocus
+          required
         />
         {error && <p className="text-crimson text-sm mb-2">{error}</p>}
 

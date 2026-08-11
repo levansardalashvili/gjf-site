@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase-browser";
 
 // ზუსტად საიტის ნავიგაციის მენიუს იმეორებს — "ფედერაცია" და "ნაკრები" ქარდებად
 // იშლება (რადგან რამდენიმე განსხვავებულ რამეს მოიცავს), დანარჩენი პირდაპირ სიაზე გადადის.
@@ -17,16 +18,22 @@ const LINKS = [
 ];
 
 // ეს არ არის საიტის მთავარ მენიუში, მაგრამ მაინც საჭიროა admin-იდან სამართავად
-const EXTRA_LINKS = [{ href: "/admin/partners", label: "პარტნიორები" }];
+const EXTRA_LINKS = [
+  { href: "/admin/partners", label: "პარტნიორები" },
+  { href: "/admin/users", label: "თანამშრომლები" },
+];
+
+const PUBLIC_PAGES = ["/admin/login", "/admin/set-password"];
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  if (pathname === "/admin/login") return children;
+  if (PUBLIC_PAGES.includes(pathname)) return children;
 
   async function handleLogout() {
-    await fetch("/api/admin/logout", { method: "POST" });
+    const supabase = createClient();
+    await supabase.auth.signOut();
     router.push("/admin/login");
     router.refresh();
   }
