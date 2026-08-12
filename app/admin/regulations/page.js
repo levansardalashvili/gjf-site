@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 import { getAllRegulations } from "@/lib/queries";
 import DeleteButton from "@/components/admin/DeleteButton";
 
@@ -18,7 +19,7 @@ export default async function AdminRegulationsList() {
         {regulations.map((r) => (
           <div key={r.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
             <div className="min-w-0">
-              <div className="text-xs opacity-50">თანმიმდევრობა: {r.sort_order} {r.file_url && "· 📄 PDF"}</div>
+              <div className="text-xs opacity-50">თანმიმდევრობა: {r.sort_order} {r.file_url && "· PDF"}</div>
               <div className="font-semibold truncate">{r.title}</div>
             </div>
             <div className="flex items-center gap-4 shrink-0">

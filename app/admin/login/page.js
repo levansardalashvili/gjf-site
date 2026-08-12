@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase-browser";
+import PasswordInput from "@/components/PasswordInput";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +32,9 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-ink px-5">
       <form onSubmit={handleSubmit} className="w-full max-w-sm bg-ink-2 border border-line rounded-2xl p-7">
-        <div className="w-10 h-10 rounded-md bg-gradient-to-br from-crimson to-crimson-dark flex items-center justify-center font-black mb-5">ჯ</div>
+        <div className="w-14 h-14 rounded-xl overflow-hidden bg-white flex items-center justify-center mb-5">
+          <Image src="/logo.png" alt="საქართველოს ძიუდოს ფედერაცია" width={99} height={125} className="w-10 h-auto" />
+        </div>
         <h1 className="font-serif font-bold text-xl mb-1">Admin შესვლა</h1>
         <p className="text-sm opacity-55 mb-6">საქართველოს ძიუდოს ფედერაცია</p>
 
@@ -45,14 +49,13 @@ export default function AdminLoginPage() {
         />
 
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-2">პაროლი</label>
-        <input
-          type="password"
+        <PasswordInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm mb-2 outline-none focus:border-gold"
+          className="w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold"
           required
         />
-        {error && <p className="text-crimson text-sm mb-2">{error}</p>}
+        {error && <p className="text-crimson text-sm mt-2 mb-2">{error}</p>}
 
         <button
           type="submit"

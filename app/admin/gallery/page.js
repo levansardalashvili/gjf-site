@@ -1,33 +1,24 @@
 import Link from "next/link";
-import { getAllGalleryItems } from "@/lib/queries";
-import DeleteButton from "@/components/admin/DeleteButton";
+import { getAllGalleryAlbums, getGalleryByType } from "@/lib/queries";
 
 export const revalidate = 0;
 
-export default async function AdminGalleryList() {
-  const items = await getAllGalleryItems();
+export default async function AdminGalleryHub() {
+  const albums = await getAllGalleryAlbums();
+  const videos = await getGalleryByType("video");
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-serif font-bold text-2xl">გალერეა</h1>
-        <Link href="/admin/gallery/new" className="bg-crimson px-4 py-2 rounded-lg text-sm font-bold">+ ახალი</Link>
-      </div>
-
-      <div className="bg-ink-2 border border-line rounded-2xl overflow-hidden">
-        {items.map((g) => (
-          <div key={g.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
-            <div className="min-w-0">
-              <div className="text-xs opacity-50">{g.type === "photo" ? "ფოტო" : "ვიდეო"}</div>
-              <div className="font-semibold truncate">{g.title || `ფოტო #${g.id}`}</div>
-            </div>
-            <div className="flex items-center gap-4 shrink-0">
-              <Link href={`/admin/gallery/${g.id}`} className="text-sm text-gold font-semibold">რედაქტირება</Link>
-              <DeleteButton endpoint={`/api/gallery/${g.id}`} confirmText="წავშალო ეს ჩანაწერი?" />
-            </div>
-          </div>
-        ))}
-        {items.length === 0 && <p className="p-6 text-sm opacity-50">გალერეის ჩანაწერი ჯერ არ არის დამატებული.</p>}
+      <h1 className="font-serif font-bold text-2xl mb-6">გალერეა</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Link href="/admin/gallery/albums" className="bg-ink-2 border border-line rounded-2xl p-5 hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+          <h3 className="font-serif font-bold text-lg mb-1">ფოტო გალერეა</h3>
+          <p className="text-sm opacity-60">{albums.length} ალბომი →</p>
+        </Link>
+        <Link href="/admin/gallery/videos" className="bg-ink-2 border border-line rounded-2xl p-5 hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
+          <h3 className="font-serif font-bold text-lg mb-1">ვიდეო გალერეა</h3>
+          <p className="text-sm opacity-60">{videos.length} ვიდეო →</p>
+        </Link>
       </div>
     </div>
   );

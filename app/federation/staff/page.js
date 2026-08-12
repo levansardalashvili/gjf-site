@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Trans from "@/components/Trans";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import Image from "next/image";
@@ -15,9 +16,9 @@ export default async function FederationStaffPage() {
       <main className="max-w-[1400px] mx-auto px-5">
         <div className="pt-10 pb-8">
           <div className="text-sm opacity-50 mb-3.5">
-            <a href="/federation" className="hover:text-gold">ფედერაცია</a> / შემადგენლობა
+            <a href="/federation" className="hover:text-gold"><Trans k="federation" /></a> / <Trans k="staff" />
           </div>
-          <h1 className="font-serif font-bold text-3xl md:text-4xl">შემადგენლობა</h1>
+          <h1 className="font-serif font-bold text-3xl md:text-4xl"><Trans k="staff" /></h1>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-16">
@@ -41,7 +42,7 @@ export default async function FederationStaffPage() {
             </Reveal>
           ))}
         </div>
-        {staff.length === 0 && <p className="opacity-50 text-sm pb-16">წევრი ჯერ არ არის დამატებული.</p>}
+        {staff.length === 0 && <p className="opacity-50 text-sm pb-16"><Trans k="noMembersYet" /></p>}
       </main>
       <Footer />
     </>

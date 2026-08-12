@@ -2,6 +2,7 @@ import { getAllNews, getNewsBySlug } from "@/lib/queries";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
+import Trans from "@/components/Trans";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -11,9 +12,14 @@ export async function generateMetadata({ params }) {
   const item = await getNewsBySlug(params.slug);
   if (!item) return {};
   return {
-    title: `${item.title} — საქართველოს ძიუდოს ფედერაცია`,
-    description: item.excerpt,
-    openGraph: { title: item.title, description: item.excerpt, type: "article" },
+    title: item.title,
+    description: item.body?.slice(0, 160),
+    openGraph: {
+      title: item.title,
+      description: item.body?.slice(0, 160),
+      type: "article",
+      images: item.image_url ? [item.image_url] : [],
+    },
   };
 }
 
@@ -29,12 +35,12 @@ export default async function NewsDetailPage({ params }) {
       <Header />
       <main className="max-w-3xl mx-auto px-5">
         <div className="text-sm opacity-50 pt-8 pb-2">
-          <a href="/news" className="hover:text-gold">სიახლეები</a> / {item.title}
+          <a href="/news" className="hover:text-gold"><Trans k="news" /></a> / {item.title}
         </div>
         <article className="py-6">
           <div className="text-xs opacity-55 mb-3 uppercase tracking-wide">{item.date}</div>
           {item.medal && (
-            <span className="inline-block bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full mb-4">{item.medal}</span>
+            <span className="inline-block bg-gold text-white text-xs font-extrabold px-2.5 py-1 rounded-full mb-4">{item.medal}</span>
           )}
           <h1 className="font-serif font-bold text-3xl md:text-4xl leading-tight mb-6">{item.title}</h1>
           {item.image_url ? (
@@ -48,7 +54,7 @@ export default async function NewsDetailPage({ params }) {
         </article>
         {related.length > 0 && (
           <section className="py-10 border-t border-line">
-            <h2 className="font-serif font-bold text-xl mb-5">სხვა სიახლეები</h2>
+            <h2 className="font-serif font-bold text-xl mb-5"><Trans k="otherNews" /></h2>
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
               {related.map((n) => <NewsCard key={n.slug} {...n} />)}
             </div>

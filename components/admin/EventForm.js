@@ -1,6 +1,9 @@
 "use client";
+import Icon from "@/components/Icon";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "./Toast";
+import { slugify } from "@/lib/slugify";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -31,6 +34,7 @@ function formatDateRange(startISO, endISO) {
 
 export default function EventForm({ initial, id, defaultCategory }) {
   const isEdit = Boolean(id);
+  const [slugTouched, setSlugTouched] = useState(isEdit);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [form, setForm] = useState({
@@ -38,6 +42,7 @@ export default function EventForm({ initial, id, defaultCategory }) {
     day: initial?.day || "",
     month: initial?.month || "",
     date_range: initial?.date_range || "",
+    event_date: initial?.event_date || "",
     tag: initial?.tag || (defaultCategory === "georgia" ? "ეროვნული" : "საერთაშორისო"),
     title: initial?.title || "",
     location: initial?.location || "",
@@ -47,9 +52,20 @@ export default function EventForm({ initial, id, defaultCategory }) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { showToast } = useToast();
 
   function update(key, value) {
     setForm((f) => ({ ...f, [key]: value }));
+  }
+
+  function handleTitleChange(value) {
+    update("title", value);
+    if (!slugTouched) update("slug", slugify(value));
+  }
+
+  function handleSlugChange(value) {
+    setSlugTouched(true);
+    update("slug", value);
   }
 
   // კატეგორიის მიხედვით ტეგი ავტომატურად
@@ -67,6 +83,7 @@ export default function EventForm({ initial, id, defaultCategory }) {
       day: String(d.getDate()),
       month: MONTHS_SHORT[d.getMonth()],
       date_range: formatDateRange(startDate, endDate || startDate),
+      event_date: startDate,
     }));
   }, [startDate, endDate]);
 
@@ -83,19 +100,28 @@ export default function EventForm({ initial, id, defaultCategory }) {
     });
     setSaving(false);
     if (res.ok) {
+      showToast("წარმატებით შესრულდა — ცვლილებები დამახსოვრებულია", "success");
       router.push(`/admin/events/${form.category}`);
       router.refresh();
     } else {
       const data = await res.json();
       setError(data.error || "შეცდომა შენახვისას");
+      showToast(data.error || "შეცდომა შენახვისას", "error");
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl flex flex-col gap-4">
       <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">Slug (ლათინურად, უნიკალური)</label>
-        <input className={FIELD_CLASS} value={form.slug} onChange={(e) => update("slug", e.target.value)} required />
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სათაური</label>
+        <input className={FIELD_CLASS} value={form.title} onChange={(e) => handleTitleChange(e.target.value)} required />
+      </div>
+
+      <div>
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">
+          Slug (ავტომატურად გენერირდება სათაურიდან — სურვილისამებრ ხელითაც შეგიძლია შეცვალო)
+        </label>
+        <input className={FIELD_CLASS} value={form.slug} onChange={(e) => handleSlugChange(e.target.value)} required />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -122,7 +148,7 @@ export default function EventForm({ initial, id, defaultCategory }) {
       </div>
 
       {form.date_range && (
-        <p className="text-sm text-gold -mt-2">📅 {form.date_range}</p>
+        <p className="text-sm text-gold -mt-2"><Icon name="calendar" size={14} className="inline mr-1" />{form.date_range}</p>
       )}
       {isEdit && !startDate && form.date_range && (
         <p className="text-xs opacity-50 -mt-2">
@@ -130,10 +156,6 @@ export default function EventForm({ initial, id, defaultCategory }) {
         </p>
       )}
 
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სათაური</label>
-        <input className={FIELD_CLASS} value={form.title} onChange={(e) => update("title", e.target.value)} required />
-      </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">ადგილმდებარეობა</label>
         <input className={FIELD_CLASS} value={form.location} onChange={(e) => update("location", e.target.value)} required />

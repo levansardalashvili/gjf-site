@@ -1,6 +1,8 @@
 "use client";
+import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "./Toast";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -15,6 +17,7 @@ export default function PageForm({ initial, id }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { showToast } = useToast();
 
   function update(key, value) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -38,6 +41,7 @@ export default function PageForm({ initial, id }) {
       update("file_name", data.name);
     } else {
       setError(data.error || "ატვირთვა ვერ მოხერხდა");
+      showToast(data.error || "შეცდომა შენახვისას", "error");
     }
   }
 
@@ -57,11 +61,13 @@ export default function PageForm({ initial, id }) {
     });
     setSaving(false);
     if (res.ok) {
+      showToast("წარმატებით შესრულდა — ცვლილებები დამახსოვრებულია", "success");
       router.push("/admin/pages");
       router.refresh();
     } else {
       const data = await res.json();
       setError(data.error || "შეცდომა შენახვისას");
+      showToast(data.error || "შეცდომა შენახვისას", "error");
     }
   }
 
@@ -84,7 +90,8 @@ export default function PageForm({ initial, id }) {
         {form.file_url ? (
           <div className="flex items-center justify-between bg-ink border border-line rounded-lg px-3.5 py-2.5">
             <a href={form.file_url} target="_blank" rel="noreferrer" className="text-sm text-gold truncate">
-              📄 {form.file_name || "ატვირთული ფაილი"}
+              <Icon name="document" size={15} className="inline mr-1" />
+              {form.file_name || "ატვირთული ფაილი"}
             </a>
             <button type="button" onClick={removeFile} className="text-xs text-crimson font-semibold ml-3 shrink-0">
               წაშლა

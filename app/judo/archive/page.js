@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Icon from "@/components/Icon";
 import Footer from "@/components/Footer";
 import { getPageBySlug } from "@/lib/queries";
 import { notFound } from "next/navigation";
@@ -24,7 +25,8 @@ export default async function Page() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 bg-ink-2 border border-line rounded-lg px-4 py-2.5 text-sm font-semibold text-gold mb-6 hover:border-gold/50"
             >
-              📄 {page.file_name || "დოკუმენტის ჩამოტვირთვა (PDF)"}
+              <Icon name="document" size={16} />
+              {page.file_name || "დოკუმენტის ჩამოტვირთვა (PDF)"}
             </a>
           )}
 

@@ -1,0 +1,42 @@
+-- events ცხრილს ემატება რეალური, დასალაგებელი თარიღის ველი
+alter table events add column if not exists event_date date;
+
+-- უკვე ჩატვირთულ IJF ტურნირებს ვუმატებთ ზუსტ თარიღებს
+update events set event_date = '2026-01-25' where slug = 'casablanca-african-open-2026-ijf';
+update events set event_date = '2026-01-25' where slug = 'gij-n-kata-world-series-2026-ijf';
+update events set event_date = '2026-01-31' where slug = 'sofia-european-open-2026-ijf';
+update events set event_date = '2026-02-07' where slug = 'paris-grand-slam-2026-ijf';
+update events set event_date = '2026-02-14' where slug = 'ljubljana-european-open-2026-ijf';
+update events set event_date = '2026-02-15' where slug = 'tunis-african-open-2026-ijf';
+update events set event_date = '2026-02-27' where slug = 'otp-group-tashkent-grand-slam-2026-ijf';
+update events set event_date = '2026-03-06' where slug = 'grand-prix-upper-austria-2026-ijf';
+update events set event_date = '2026-03-07' where slug = 'tbilisi-veteran-european-cup-2026-ijf';
+update events set event_date = '2026-03-14' where slug = 'warsaw-european-open-2026-ijf';
+update events set event_date = '2026-03-20' where slug = 'tbilisi-grand-slam-2026-ijf';
+update events set event_date = '2026-03-23' where slug = 'tbilisi-itc-2026-ijf';
+update events set event_date = '2026-04-16' where slug = 'european-senior-championships-2026-individuals-ijf';
+update events set event_date = '2026-04-16' where slug = 'asian-senior-championships-2026-individuals-ijf';
+update events set event_date = '2026-04-18' where slug = 'panamerican-senior-championships-2026-individuals-ijf';
+update events set event_date = '2026-04-24' where slug = 'african-senior-championships-2026-individuals-ijf';
+update events set event_date = '2026-05-01' where slug = 'dushanbe-grand-slam-2026-ijf';
+update events set event_date = '2026-05-08' where slug = 'qazaqstan-barysy-grand-slam-2026-ijf';
+update events set event_date = '2026-05-09' where slug = 'gori-senior-european-cup-2026-ijf';
+update events set event_date = '2026-05-16' where slug = 'european-judo-championships-kata-sarajevo-2026-ijf';
+update events set event_date = '2026-06-06' where slug = 'tallinn-european-open-2026-ijf';
+update events set event_date = '2026-06-19' where slug = 'ulaanbaatar-grand-slam-2026-ijf';
+update events set event_date = '2026-06-26' where slug = 'qingdao-grand-prix-2026-ijf';
+update events set event_date = '2026-06-27' where slug = 'prague-european-open-2026-ijf';
+update events set event_date = '2026-06-29' where slug = 'millennium-team-european-championships-cadets-gran-canaria-2026-ijf';
+update events set event_date = '2026-07-18' where slug = 'sarajevo-european-open-2026-ijf';
+update events set event_date = '2026-07-31' where slug = 'commonwealth-games-glasgow-2026-ijf';
+update events set event_date = '2026-08-14' where slug = 'lima-grand-prix-2026-ijf';
+update events set event_date = '2026-08-20' where slug = 'guayaquil-world-championships-cadets-2026-ijf';
+update events set event_date = '2026-08-28' where slug = 'lausanne-grand-slam-2026-ijf';
+update events set event_date = '2026-08-28' where slug = 'xx-mediterranean-games-2026-ijf';
+update events set event_date = '2026-09-03' where slug = 'european-championships-juniors-podgorica-2026-ijf';
+update events set event_date = '2026-09-11' where slug = 'hungary-grand-slam-2026-ijf';
+update events set event_date = '2026-09-20' where slug = 'sarajevo-world-championships-veterans-2026-ijf';
+update events set event_date = '2026-09-26' where slug = 'sarajevo-world-championships-kata-2026-ijf';
+update events set event_date = '2026-10-04' where slug = 'baku-world-senior-championships-2026-ijf';
+update events set event_date = '2026-10-22' where slug = 'european-championships-veterans-2026-ijf';
+update events set event_date = '2026-10-29' where slug = 'abu-dhabi-grand-slam-2026-ijf';

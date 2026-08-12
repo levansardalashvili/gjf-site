@@ -1,19 +1,40 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "./Toast";
+import ConfirmModal from "./ConfirmModal";
 
-export default function DeleteButton({ endpoint, confirmText = "წავშალო?" }) {
+export default function DeleteButton({ endpoint, confirmText = "ეს ჩანაწერი მუდმივად წაიშლება — ამის დაბრუნება შეუძლებელია." }) {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { showToast } = useToast();
 
   async function handleDelete() {
-    if (!confirm(confirmText)) return;
+    setLoading(true);
     const res = await fetch(endpoint, { method: "DELETE" });
-    if (res.ok) router.refresh();
-    else alert("წაშლა ვერ მოხერხდა");
+    setLoading(false);
+    setOpen(false);
+    if (res.ok) {
+      showToast("წაიშალა", "success");
+      router.refresh();
+    } else {
+      showToast("წაშლა ვერ მოხერხდა", "error");
+    }
   }
 
   return (
-    <button onClick={handleDelete} className="text-sm text-crimson font-semibold hover:underline">
-      წაშლა
-    </button>
+    <>
+      <button onClick={() => setOpen(true)} className="text-sm text-crimson font-semibold hover:underline">
+        წაშლა
+      </button>
+      <ConfirmModal
+        open={open}
+        text={confirmText}
+        loading={loading}
+        onConfirm={handleDelete}
+        onCancel={() => setOpen(false)}
+      />
+    </>
   );
 }

@@ -4,16 +4,33 @@ import Link from "next/link";
 import Image from "next/image";
 import BeltDivider from "./BeltDivider";
 import { NAV } from "@/lib/nav";
+import { useLanguage } from "@/lib/i18n";
+import Icon from "./Icon";
+import SearchModal from "./SearchModal";
 
+function LanguageSwitcher({ lang, setLang, className = "" }) {
+  const isKa = lang === "ka";
+  return (
+    <button
+      onClick={() => setLang(isKa ? "en" : "ka")}
+      className={`inline-flex items-center justify-center w-[58px] h-[30px] px-1 rounded-md border border-line text-xs font-bold leading-none hover:border-gold hover:text-gold transition-colors normal-case shrink-0 ${className}`}
+      aria-label={isKa ? "Switch to English" : "ქართულზე გადართვა"}
+    >
+      {isKa ? "ENG" : "ქართ"}
+    </button>
+  );
+}
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [expanded, setExpanded] = useState(null); // mobile accordion state
+  const { lang, setLang } = useLanguage();
 
   return (
     <>
       <header className="sticky top-0 z-50 bg-ink/90 backdrop-blur border-b border-line">
-        <div className="max-w-[1400px] mx-auto flex items-center justify-between px-5 py-3.5">
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-6 px-5 py-3.5">
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
             <Image src="/logo.png" alt="საქართველოს ძიუდოს ფედერაცია" width={99} height={125} className="h-9 w-auto" priority />
             <span className="hidden sm:block text-xs md:text-sm font-semibold leading-tight whitespace-nowrap">
@@ -22,11 +39,11 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — hover-dropdown */}
-          <nav className="hidden md:flex gap-5 text-sm font-semibold uppercase tracking-wide opacity-90">
+          <nav className="hidden md:flex items-center gap-5 text-sm font-semibold uppercase tracking-wide opacity-90">
             {NAV.map((item) => (
               <div key={item.href} className="relative group">
                 <Link href={item.href} className="flex items-center gap-1 py-2 hover:text-gold">
-                  {item.label}
+                  {item.label[lang]}
                   {item.children && (
                     <svg width="9" height="9" viewBox="0 0 10 10" className="opacity-60 mt-px">
                       <path d="M1 3 L5 7 L9 3" stroke="currentColor" strokeWidth="1.4" fill="none" />
@@ -47,7 +64,7 @@ export default function Header() {
                           href={c.href}
                           className="block px-4 py-2.5 text-sm font-medium tracking-normal hover:bg-ink hover:text-gold"
                         >
-                          {c.label}
+                          {c.label[lang]}
                         </Link>
                       ))}
                     </div>
@@ -55,15 +72,35 @@ export default function Header() {
                 )}
               </div>
             ))}
+
+            <div className="w-px h-5 bg-line mx-4" />
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="opacity-70 hover:opacity-100 hover:text-gold transition-colors normal-case shrink-0"
+              aria-label="ძებნა"
+            >
+              <Icon name="search" size={18} />
+            </button>
+            <LanguageSwitcher lang={lang} setLang={setLang} className="ml-3" />
           </nav>
 
-          <button
-            onClick={() => setOpen(true)}
-            className="md:hidden w-[38px] h-[38px] border border-line rounded-lg flex items-center justify-center"
-            aria-label="მენიუს გახსნა"
-          >
-            <div className="relative w-4 h-px bg-offwhite before:content-[''] before:absolute before:left-0 before:-top-1.5 before:w-4 before:h-px before:bg-offwhite after:content-[''] after:absolute after:left-0 after:top-1.5 after:w-4 after:h-px after:bg-offwhite" />
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="w-[38px] h-[38px] border border-line rounded-lg flex items-center justify-center shrink-0"
+              aria-label="ძებნა"
+            >
+              <Icon name="search" size={17} />
+            </button>
+            <LanguageSwitcher lang={lang} setLang={setLang} />
+            <button
+              onClick={() => setOpen(true)}
+              className="w-[38px] h-[38px] border border-line rounded-lg flex items-center justify-center shrink-0"
+              aria-label="მენიუს გახსნა"
+            >
+              <div className="relative w-4 h-px bg-offwhite before:content-[''] before:absolute before:left-0 before:-top-1.5 before:w-4 before:h-px before:bg-offwhite after:content-[''] after:absolute after:left-0 after:top-1.5 after:w-4 after:h-px after:bg-offwhite" />
+            </button>
+          </div>
         </div>
       </header>
       <BeltDivider />
@@ -81,7 +118,7 @@ export default function Header() {
             className="w-[38px] h-[38px] border border-line rounded-lg flex items-center justify-center"
             aria-label="დახურვა"
           >
-            ✕
+            <Icon name="close" size={16} />
           </button>
         </div>
 
@@ -93,7 +130,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className="flex-1 py-3.5 text-lg font-semibold"
               >
-                {item.label}
+                {item.label[lang]}
               </Link>
               {item.children && (
                 <button
@@ -121,7 +158,7 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                     className="block py-2.5 text-sm opacity-75"
                   >
-                    {c.label}
+                    {c.label[lang]}
                   </Link>
                 ))}
               </div>
@@ -129,6 +166,8 @@ export default function Header() {
           </div>
         ))}
       </div>
+
+      <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
 }

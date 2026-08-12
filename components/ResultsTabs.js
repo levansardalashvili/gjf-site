@@ -2,13 +2,15 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Reveal from "./Reveal";
+import Icon from "./Icon";
 import Pagination from "./Pagination";
+import { useLanguage } from "@/lib/i18n";
 
 const GROUPS = [
-  { key: "standart", label: "უფროსები" },
-  { key: "youth", label: "ახალგაზრდები" },
-  { key: "kids", label: "ჭაბუკები" },
-  { key: "women", label: "ქალები" },
+  { key: "standart", labelKey: "seniors" },
+  { key: "youth", labelKey: "juniors" },
+  { key: "kids", labelKey: "cadets" },
+  { key: "women", labelKey: "women_bc" },
 ];
 
 const PER_PAGE = 15;
@@ -16,6 +18,7 @@ const PER_PAGE = 15;
 export default function ResultsTabs({ results }) {
   const [tab, setTab] = useState("standart");
   const [page, setPage] = useState(1);
+  const { t } = useLanguage();
 
   const filtered = useMemo(() => results.filter((r) => r.age_group === tab), [results, tab]);
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
@@ -37,7 +40,7 @@ export default function ResultsTabs({ results }) {
               tab === g.key ? "opacity-100 border-gold text-gold" : "opacity-55 border-transparent hover:opacity-80"
             }`}
           >
-            {g.label}
+            {t(g.labelKey)}
           </button>
         ))}
       </div>
@@ -52,17 +55,17 @@ export default function ResultsTabs({ results }) {
                   className="block bg-ink-2 border border-line rounded-2xl p-5 h-full hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
                 >
                   {r.medal && (
-                    <span className="inline-block bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full mb-3">
+                    <span className="inline-block bg-gold text-white text-xs font-extrabold px-2.5 py-1 rounded-full mb-3">
                       {r.medal}
                     </span>
                   )}
                   <h3 className="font-serif font-bold text-base leading-snug mb-2">{r.event_name}</h3>
                   <div className="text-xs opacity-55 space-y-0.5">
-                    {r.event_date && <div>📅 {r.event_date}</div>}
-                    {r.weight && <div>⚖️ {r.weight}</div>}
-                    {r.athlete && r.athlete !== "—" && <div>🥋 {r.athlete}</div>}
+                    {r.event_date && <div className="flex items-center gap-1.5"><Icon name="calendar" size={13} />{r.event_date}</div>}
+                    {r.weight && <div>{r.weight}</div>}
+                    {r.athlete && r.athlete !== "—" && <div className="flex items-center gap-1.5"><Icon name="judo" size={13} />{r.athlete}</div>}
                   </div>
-                  <span className="inline-block text-sm font-bold text-gold mt-3">დეტალურად →</span>
+                  <span className="inline-block text-sm font-bold text-gold mt-3">{t("viewDetails")} →</span>
                 </Link>
               </Reveal>
             ))}
@@ -71,7 +74,7 @@ export default function ResultsTabs({ results }) {
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </>
       ) : (
-        <p className="opacity-50 text-sm py-8">ამ კატეგორიაში შედეგები ჯერ არ არის დამატებული.</p>
+        <p className="opacity-50 text-sm py-8">{t("noResultsYet")}</p>
       )}
     </>
   );

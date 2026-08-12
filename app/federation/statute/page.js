@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import Trans from "@/components/Trans";
+import Icon from "@/components/Icon";
 import { getPageBySlug } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
@@ -16,7 +18,7 @@ export default async function StatutePage() {
       <main className="max-w-[1400px] mx-auto px-5">
         <div className="pt-10 pb-8">
           <div className="text-sm opacity-50 mb-3.5">
-            <a href="/federation" className="hover:text-gold">ფედერაცია</a> / წესდება
+            <a href="/federation" className="hover:text-gold"><Trans k="federation" /></a> / <Trans k="statute" />
           </div>
         </div>
 
@@ -28,8 +30,8 @@ export default async function StatutePage() {
               rel="noreferrer"
               className="block bg-ink-2 border border-line rounded-3xl p-10 md:p-14 text-center hover:border-gold/50 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
             >
-              <div className="w-20 h-20 mx-auto rounded-2xl bg-gold/15 text-gold flex items-center justify-center text-4xl mb-6">
-                📄
+              <div className="w-20 h-20 mx-auto rounded-2xl bg-gold/15 text-gold flex items-center justify-center mb-6">
+                <Icon name="document" size={34} />
               </div>
               <h1 className="font-serif font-bold text-3xl md:text-4xl mb-4">{page.title}</h1>
               {page.body && (
@@ -39,10 +41,10 @@ export default async function StatutePage() {
               )}
               {page.file_url ? (
                 <span className="inline-flex items-center gap-2 bg-crimson px-7 py-3.5 rounded-lg text-sm md:text-base font-bold">
-                  PDF ჩამოტვირთვა →
+                  <Trans k="downloadPdfBtn" /> →
                 </span>
               ) : (
-                <span className="inline-block text-sm opacity-50">დოკუმენტი ჯერ არ არის ატვირთული</span>
+                <span className="inline-block text-sm opacity-50"><Trans k="noDocumentUploaded" /></span>
               )}
             </a>
           </Reveal>

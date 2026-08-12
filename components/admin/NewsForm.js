@@ -1,29 +1,49 @@
 "use client";
+import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "./Toast";
+import { slugify } from "@/lib/slugify";
 import Image from "next/image";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
+const MONTHS_FULL = ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"];
+
 export default function NewsForm({ initial, id }) {
   const isEdit = Boolean(id);
+  const [slugTouched, setSlugTouched] = useState(isEdit); // edit-ისას ავტომატურად აღარ გადავაწერთ slug-ს
   const [form, setForm] = useState({
     slug: initial?.slug || "",
     date: initial?.date || "",
     title: initial?.title || "",
-    medal: initial?.medal || "",
-    featured: initial?.featured || false,
-    excerpt: initial?.excerpt || "",
-    body: initial?.body || "",
     image_url: initial?.image_url || "",
+    body: initial?.body || "",
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { showToast } = useToast();
 
   function update(key, value) {
     setForm((f) => ({ ...f, [key]: value }));
+  }
+
+  function handleTitleChange(value) {
+    update("title", value);
+    if (!slugTouched) update("slug", slugify(value));
+  }
+
+  function handleSlugChange(value) {
+    setSlugTouched(true);
+    update("slug", value);
+  }
+
+  function handleDateChange(isoDate) {
+    if (!isoDate) return;
+    const d = new Date(isoDate + "T00:00:00");
+    update("date", `${d.getDate()} ${MONTHS_FULL[d.getMonth()]} ${d.getFullYear()}`);
   }
 
   async function handleImageChange(e) {
@@ -43,37 +63,52 @@ export default function NewsForm({ initial, id }) {
       update("image_url", data.url);
     } else {
       setError(data.error || "ატვირთვა ვერ მოხერხდა");
+      showToast(data.error || "ატვირთვა ვერ მოხერხდა", "error");
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setSaving(true);
     setError("");
+
+    if (!form.image_url) {
+      setError("ფოტოს ატვირთვა სავალდებულოა");
+      showToast("ფოტოს ატვირთვა სავალდებულოა", "error");
+      return;
+    }
+
+    setSaving(true);
     const endpoint = isEdit ? `/api/news/${id}` : "/api/news";
     const method = isEdit ? "PUT" : "POST";
     const res = await fetch(endpoint, {
       method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, medal: form.medal || null }),
+      body: JSON.stringify(form),
     });
     setSaving(false);
     if (res.ok) {
+      showToast("წარმატებით შესრულდა — ცვლილებები დამახსოვრებულია", "success");
       router.push("/admin/news");
       router.refresh();
     } else {
       const data = await res.json();
       setError(data.error || "შეცდომა შენახვისას");
+      showToast(data.error || "შეცდომა შენახვისას", "error");
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl flex flex-col gap-4">
       <div>
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სათაური</label>
+        <input className={FIELD_CLASS} value={form.title} onChange={(e) => handleTitleChange(e.target.value)} required />
+      </div>
+
+      <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">
-          Slug (ლათინურად, უნიკალური — URL-ისთვის)
+          Slug (ავტომატურად გენერირდება სათაურიდან — სურვილისამებრ ხელითაც შეგიძლია შეცვალო)
         </label>
-        <input className={FIELD_CLASS} value={form.slug} onChange={(e) => update("slug", e.target.value)} required />
+        <input className={FIELD_CLASS} value={form.slug} onChange={(e) => handleSlugChange(e.target.value)} required />
       </div>
 
       <div>
@@ -108,27 +143,18 @@ export default function NewsForm({ initial, id }) {
 
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">თარიღი</label>
-        <input className={FIELD_CLASS} placeholder="28 ივლისი 2026" value={form.date} onChange={(e) => update("date", e.target.value)} required />
+        <input
+          type="date"
+          className={FIELD_CLASS}
+          onChange={(e) => handleDateChange(e.target.value)}
+          required
+        />
+        {form.date && <p className="text-sm text-gold mt-1.5"><Icon name="calendar" size={14} className="inline mr-1" />{form.date}</p>}
       </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სათაური</label>
-        <input className={FIELD_CLASS} value={form.title} onChange={(e) => update("title", e.target.value)} required />
-      </div>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">მედალი (არასავალდებულო, მაგ. 🥇 ოქრო)</label>
-        <input className={FIELD_CLASS} value={form.medal} onChange={(e) => update("medal", e.target.value)} />
-      </div>
-      <label className="flex items-center gap-2 text-sm">
-        <input type="checkbox" checked={form.featured} onChange={(e) => update("featured", e.target.checked)} />
-        გამორჩეული (მთავარ გვერდზე დიდი ჩანს)
-      </label>
-      <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">მოკლე აღწერა</label>
-        <textarea className={FIELD_CLASS} rows={2} value={form.excerpt} onChange={(e) => update("excerpt", e.target.value)} />
-      </div>
+
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სრული ტექსტი</label>
-        <textarea className={FIELD_CLASS} rows={6} value={form.body} onChange={(e) => update("body", e.target.value)} />
+        <textarea className={FIELD_CLASS} rows={6} value={form.body} onChange={(e) => update("body", e.target.value)} required />
       </div>
 
       {error && <p className="text-crimson text-sm">{error}</p>}

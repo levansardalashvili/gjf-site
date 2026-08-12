@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import Icon from "./Icon";
 
 export default function CalendarRegulations({ items }) {
   if (items.length === 0) return null;
@@ -13,7 +14,7 @@ export default function CalendarRegulations({ items }) {
       {notices.map((r) => (
         <Reveal key={r.id} className="mb-6">
           <div className="bg-crimson/10 border border-crimson/40 rounded-2xl p-6">
-            <h3 className="font-serif font-bold text-lg text-gold mb-3">⚠ {r.title}</h3>
+            <h3 className="font-serif font-bold text-lg text-gold mb-3 flex items-center gap-2"><Icon name="warning" size={19} />{r.title}</h3>
             <p className="text-sm leading-relaxed opacity-90 mb-4">{r.body}</p>
             {r.file_url && (
               <a
@@ -22,7 +23,8 @@ export default function CalendarRegulations({ items }) {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 bg-crimson text-white font-bold text-sm px-4 py-2.5 rounded-lg hover:bg-crimson-dark transition-colors"
               >
-                📄 {r.file_name || "დოკუმენტის ნახვა"}
+                <Icon name="document" size={16} />
+                {r.file_name || "დოკუმენტის ნახვა"}
               </a>
             )}
           </div>
@@ -40,8 +42,8 @@ export default function CalendarRegulations({ items }) {
                 download={r.force_download ? (r.file_name || true) : undefined}
                 className="block bg-ink-2 border border-line rounded-2xl p-5 h-full hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-lg bg-gold/15 text-gold flex items-center justify-center mb-4 text-lg">
-                  {r.force_download ? "⬇" : "📄"}
+                <div className="w-10 h-10 rounded-lg bg-gold/15 text-gold flex items-center justify-center mb-4">
+                  <Icon name={r.force_download ? "download" : "document"} size={18} />
                 </div>
                 <h3 className="font-serif font-bold text-base leading-snug mb-2">{r.title}</h3>
                 {r.excerpt && <p className="text-sm opacity-60 leading-relaxed">{r.excerpt}</p>}

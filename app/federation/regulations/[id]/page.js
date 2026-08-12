@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Trans from "@/components/Trans";
+import Icon from "@/components/Icon";
 import { getRegulationById } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
@@ -14,7 +16,7 @@ export default async function RegulationDetailPage({ params }) {
       <Header />
       <main className="max-w-3xl mx-auto px-5">
         <div className="text-sm opacity-50 pt-8 pb-2">
-          <a href="/federation/regulations" className="hover:text-gold">დებულებები</a> / {regulation.title}
+          <a href="/federation/regulations" className="hover:text-gold"><Trans k="regulations" /></a> / {regulation.title}
         </div>
 
         <article className="py-6">
@@ -27,7 +29,8 @@ export default async function RegulationDetailPage({ params }) {
               rel="noreferrer"
               className="inline-flex items-center gap-2 bg-ink-2 border border-line rounded-lg px-4 py-2.5 text-sm font-semibold text-gold mb-6 hover:border-gold/50 transition-colors"
             >
-              📄 {regulation.file_name || "დოკუმენტის ჩამოტვირთვა (PDF)"}
+              <Icon name="document" size={16} />
+              {regulation.file_name || <Trans k="downloadPdf" />}
             </a>
           )}
 

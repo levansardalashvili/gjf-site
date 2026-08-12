@@ -74,9 +74,9 @@ export default function HeroCarousel({ news, fullBleed = false }) {
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2.5 mb-3">
                   {item.medal && (
-                    <span className="bg-gold text-[#14171c] text-xs font-extrabold px-2.5 py-1 rounded-full">{item.medal}</span>
+                    <span className="bg-gold text-white text-xs font-extrabold px-2.5 py-1 rounded-full">{item.medal}</span>
                   )}
-                  <span className="text-xs uppercase tracking-widest text-gold font-bold">{item.date}</span>
+                  <span className="text-xs uppercase tracking-widest text-white font-bold">{item.date}</span>
                 </div>
                 <h2 className="font-serif font-bold text-2xl md:text-4xl leading-tight text-[#faf7f0]">
                   {item.title}

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "./Toast";
 import Image from "next/image";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
@@ -17,6 +18,7 @@ export default function StaffForm({ initial, id }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { showToast } = useToast();
 
   function update(key, value) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -49,11 +51,13 @@ export default function StaffForm({ initial, id }) {
     });
     setSaving(false);
     if (res.ok) {
+      showToast("წარმატებით შესრულდა — ცვლილებები დამახსოვრებულია", "success");
       router.push("/admin/staff");
       router.refresh();
     } else {
       const data = await res.json();
       setError(data.error || "შეცდომა შენახვისას");
+      showToast(data.error || "შეცდომა შენახვისას", "error");
     }
   }
 

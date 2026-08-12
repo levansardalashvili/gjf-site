@@ -7,14 +7,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-      ink: "#14171c",
-      "ink-2": "#1d2128",
+      ink: "#ffffff",
+      "ink-2": "#f9f7f5",
       parchment: "#f2ece0",
-      crimson: "#b0242f",
-      "crimson-dark": "#7e1721",
-      gold: "#c9a227",
-      line: "rgba(242,236,224,0.12)",
-      offwhite: "#faf7f0",
+      crimson: "#5c1a28",
+      "crimson-dark": "#42121c",
+      gold: "#7a2436",
+      line: "rgba(0,0,0,0.08)",
+      offwhite: "#201d1a",
     },
       fontFamily: {
         serif: ["'Noto Serif Georgian'", "serif"],

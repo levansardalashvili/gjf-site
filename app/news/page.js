@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsGrid from "@/components/NewsGrid";
+import Trans from "@/components/Trans";
 import { getAllNews } from "@/lib/queries";
 
 export const revalidate = 60;
@@ -15,8 +16,8 @@ export default async function NewsArchive() {
       <Header />
       <main className="max-w-[1400px] mx-auto px-5">
         <div className="pt-10 pb-7">
-          <div className="text-sm opacity-50 mb-3.5">მთავარი / სიახლეები</div>
-          <h1 className="font-serif font-bold text-3xl md:text-4xl">სიახლეები</h1>
+          <div className="text-sm opacity-50 mb-3.5"><Trans k="home_bc" /> / <Trans k="news" /></div>
+          <h1 className="font-serif font-bold text-3xl md:text-4xl"><Trans k="news" /></h1>
         </div>
 
         <div className="flex gap-2.5 overflow-x-auto pb-1.5 mb-8 no-scrollbar">

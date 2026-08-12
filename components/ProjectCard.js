@@ -1,7 +1,10 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
+import { useLanguage } from "@/lib/i18n";
 
 export default function ProjectCard({ slug, title, image_url, excerpt, fixedWidth = false, index }) {
+  const { t } = useLanguage();
   const number = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
 
   return (
@@ -30,7 +33,7 @@ export default function ProjectCard({ slug, title, image_url, excerpt, fixedWidt
         )}
       </div>
       <div className="p-4 pb-5 pt-4 relative">
-        <div className="text-[0.68rem] uppercase tracking-wider text-crimson font-bold mb-1.5">პროექტი</div>
+        <div className="text-[0.68rem] uppercase tracking-wider text-crimson font-bold mb-1.5">{t("project")}</div>
         <h3 className="font-serif font-semibold leading-snug text-sm line-clamp-2">{title}</h3>
         {excerpt && <p className="text-xs opacity-55 mt-2 line-clamp-2">{excerpt}</p>}
       </div>

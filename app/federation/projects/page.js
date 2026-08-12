@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Trans from "@/components/Trans";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
 import ProjectsShowcase from "@/components/ProjectsShowcase";
@@ -18,7 +19,7 @@ export default async function ProjectsPage() {
       <main className="max-w-[1400px] mx-auto px-5">
         <div className="pt-10 pb-8">
           <div className="text-sm opacity-50 mb-3.5">მთავარი / ფედერაცია / პროექტები</div>
-          <h1 className="font-serif font-bold text-3xl md:text-4xl">პროექტები</h1>
+          <h1 className="font-serif font-bold text-3xl md:text-4xl"><Trans k="projects" /></h1>
         </div>
 
         <ProjectsShowcase projects={featured} />
