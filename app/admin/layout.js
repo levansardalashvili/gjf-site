@@ -22,6 +22,7 @@ const LINKS = [
 // ეს არ არის საიტის მთავარ მენიუში, მაგრამ მაინც საჭიროა admin-იდან სამართავად
 const EXTRA_LINKS = [
   { href: "/admin/partners", label: "პარტნიორები" },
+  { href: "/admin/portal-links", label: "Portal ბლოკი" },
   { href: "/admin/users", label: "თანამშრომლები" },
 ];
 

@@ -26,7 +26,7 @@ export default async function AdminAlbumsList() {
           return (
             <div key={a.id} className="bg-ink-2 border border-line rounded-2xl overflow-hidden hover:border-gold/50 transition-colors">
               <Link href={`/admin/gallery/albums/${a.id}/photos`} className="block relative aspect-[4/3] bg-ink">
-                {a.cover_image_url && <Image src={a.cover_image_url} alt={a.title} fill className="object-cover" />}
+                {a.cover_image_url && <Image src={a.cover_image_url} alt={a.title} fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />}
               </Link>
               <div className="p-4">
                 <Link href={`/admin/gallery/albums/${a.id}/photos`} className="font-semibold text-sm block truncate hover:text-gold transition-colors">

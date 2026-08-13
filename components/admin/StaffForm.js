@@ -77,7 +77,7 @@ export default function StaffForm({ initial, id }) {
         {form.photo_url ? (
           <div className="relative">
             <div className="relative w-24 h-24 rounded-full overflow-hidden border border-line">
-              <Image src={form.photo_url} alt="" fill className="object-cover" />
+              <Image src={form.photo_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />
             </div>
             <button type="button" onClick={() => update("photo_url", "")} className="mt-2 text-xs text-crimson font-semibold block">
               წაშლა

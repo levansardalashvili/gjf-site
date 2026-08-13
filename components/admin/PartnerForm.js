@@ -73,7 +73,7 @@ export default function PartnerForm({ initial, id }) {
         {form.logo_url ? (
           <div className="relative">
             <div className="relative w-full h-32 rounded-lg overflow-hidden border border-line bg-white flex items-center justify-center">
-              <Image src={form.logo_url} alt="" fill className="object-contain p-4" />
+              <Image src={form.logo_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-contain p-4" />
             </div>
             <button type="button" onClick={() => update("logo_url", "")} className="mt-2 text-xs text-crimson font-semibold">
               ლოგოს წაშლა და სხვის ატვირთვა

@@ -21,7 +21,7 @@ export default async function AdminNewsList() {
         {news.map((n) => (
           <div key={n.id} className="group flex items-center gap-4 px-5 py-3.5 border-b border-line last:border-0 hover:bg-ink/40 transition-colors">
             <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 bg-ink border border-line">
-              {n.image_url && <Image src={n.image_url} alt="" fill className="object-cover" />}
+              {n.image_url && <Image src={n.image_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />}
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-xs opacity-50">{n.date} {n.created_at && `· დაემატა ${timeAgo(n.created_at)}`}</div>

@@ -16,7 +16,7 @@ export default function AlbumGallery({ photos }) {
               onClick={() => setOpenIndex(i)}
               className="group relative block w-full aspect-square rounded-lg overflow-hidden border border-line hover:border-gold/50 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300"
             >
-              <Image src={p.image_url} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+              <Image src={p.image_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
             </button>
           </Reveal>
         ))}

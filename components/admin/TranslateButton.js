@@ -1,8 +1,8 @@
 "use client";
-import Icon from "@/components/Icon";
 import { useState } from "react";
+import Icon from "@/components/Icon";
 
-// მრგვალი "🌐 თარგმნა" ღილაკი — ქართული ველის შიგთავსს გზავნის /api/translate-ზე
+// პატარა "თარგმნა" ღილაკი — ქართული ველის შიგთავსს გზავნის /api/translate-ზე
 // და შედეგს onTranslated(text)-ით უბრუნებს გამომძახებელ ფორმას.
 export default function TranslateButton({ sourceText, onTranslated }) {
   const [loading, setLoading] = useState(false);
@@ -25,9 +25,10 @@ export default function TranslateButton({ sourceText, onTranslated }) {
       type="button"
       onClick={handleClick}
       disabled={loading}
-      className="text-xs font-semibold text-gold hover:opacity-80 transition-opacity disabled:opacity-40 whitespace-nowrap"
+      className="inline-flex items-center gap-1.5 text-xs font-semibold text-gold hover:opacity-80 transition-opacity disabled:opacity-40 whitespace-nowrap"
     >
-      {loading ? "თარგმნა..." : (<span className="inline-flex items-center gap-1"><Icon name="globe" size={13} />ქართულიდან თარგმნა</span>)}
+      <Icon name="globe" size={13} />
+      {loading ? "თარგმნა..." : "თარგმნა ქართულიდან"}
     </button>
   );
 }

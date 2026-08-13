@@ -3,9 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n";
 
-export default function ProjectCard({ slug, title, image_url, excerpt, fixedWidth = false, index }) {
-  const { t } = useLanguage();
+export default function ProjectCard({ slug, title, title_en, image_url, excerpt, excerpt_en, fixedWidth = false, index }) {
+  const { t, lang } = useLanguage();
   const number = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
+  const displayTitle = (lang === "en" && title_en) ? title_en : title;
+  const displayExcerpt = (lang === "en" && excerpt_en) ? excerpt_en : excerpt;
 
   return (
     <Link
@@ -15,7 +17,7 @@ export default function ProjectCard({ slug, title, image_url, excerpt, fixedWidt
       }`}
     >
       <div className="relative aspect-[16/10] bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]">
-        {image_url && <Image src={image_url} alt={title} fill className="object-cover" />}
+        {image_url && <Image src={image_url} alt={displayTitle} fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />}
 
         {number && (
           <span
@@ -34,8 +36,8 @@ export default function ProjectCard({ slug, title, image_url, excerpt, fixedWidt
       </div>
       <div className="p-4 pb-5 pt-4 relative">
         <div className="text-[0.68rem] uppercase tracking-wider text-crimson font-bold mb-1.5">{t("project")}</div>
-        <h3 className="font-serif font-semibold leading-snug text-sm line-clamp-2">{title}</h3>
-        {excerpt && <p className="text-xs opacity-55 mt-2 line-clamp-2">{excerpt}</p>}
+        <h3 className="font-serif font-semibold leading-snug text-sm line-clamp-2">{displayTitle}</h3>
+        {displayExcerpt && <p className="text-xs opacity-55 mt-2 line-clamp-2">{displayExcerpt}</p>}
       </div>
     </Link>
   );

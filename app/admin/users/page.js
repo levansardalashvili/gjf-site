@@ -1,5 +1,7 @@
 import { getAdminClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase-server";
 import InviteUserForm from "@/components/admin/InviteUserForm";
+import DeleteButton from "@/components/admin/DeleteButton";
 
 export const revalidate = 0;
 
@@ -7,6 +9,9 @@ export default async function AdminUsersPage() {
   const admin = getAdminClient();
   const { data, error } = await admin.auth.admin.listUsers();
   const users = error ? [] : data.users;
+
+  const supabase = createClient();
+  const { data: { user: currentUser } } = await supabase.auth.getUser();
 
   return (
     <div>
@@ -18,16 +23,27 @@ export default async function AdminUsersPage() {
       <InviteUserForm />
 
       <div className="mt-8 bg-ink-2 border border-line rounded-2xl overflow-hidden">
-        {users.map((u) => (
-          <div key={u.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
-            <div className="min-w-0">
-              <div className="font-semibold truncate">{u.email}</div>
-              <div className="text-xs opacity-50 mt-0.5">
-                {u.last_sign_in_at ? "შესულა უკვე" : "ჯერ არ შესულა (მოწვევა გაგზავნილია)"}
+        {users.map((u) => {
+          const isSelf = u.id === currentUser?.id;
+          return (
+            <div key={u.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
+              <div className="min-w-0">
+                <div className="font-semibold truncate">
+                  {u.email} {isSelf && <span className="text-xs opacity-50 font-normal">(შენ)</span>}
+                </div>
+                <div className="text-xs opacity-50 mt-0.5">
+                  {u.last_sign_in_at ? "შესულა უკვე" : "ჯერ არ შესულა (მოწვევა გაგზავნილია)"}
+                </div>
               </div>
+              {!isSelf && (
+                <DeleteButton
+                  endpoint={`/api/admin/users/${u.id}`}
+                  confirmText={`"${u.email}"-ს წვდომა admin პანელზე სამუდამოდ გაუქმდება.`}
+                />
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
         {users.length === 0 && <p className="p-6 text-sm opacity-50">მომხმარებელი ვერ მოიძებნა.</p>}
       </div>
     </div>

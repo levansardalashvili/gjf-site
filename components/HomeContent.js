@@ -5,12 +5,12 @@ import ProjectCard from "./ProjectCard";
 import PortalLinks from "./PortalLinks";
 import NationalTeamLinks from "./NationalTeamLinks";
 import PartnersStrip from "./PartnersStrip";
+import MainEventsPanel from "./MainEventsPanel";
 import Reveal from "./Reveal";
 import AnimatedNumber from "./AnimatedNumber";
-import EventCountdown from "./EventCountdown";
 import { useLanguage } from "@/lib/i18n";
 
-export default function HomeContent({ carouselNews, events, featuredProjects, partners }) {
+export default function HomeContent({ carouselNews, events, featuredProjects, partners, portalLinks }) {
   const { t } = useLanguage();
 
   const STATS = [
@@ -19,23 +19,35 @@ export default function HomeContent({ carouselNews, events, featuredProjects, pa
     ["57", t("statEurope")],
   ];
 
-  // events უკვე დალაგებულია მოახლოებული-პირველად — პირველივე მომავალი ჩანაწერია "შემდეგი"
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const nextEvent = events.find((e) => e.event_date && new Date(e.event_date) >= today);
+  const mainEvents = events.filter((e) => e.is_main_event).slice(0, 5);
 
   return (
     <main>
-      <HeroCarousel news={carouselNews} fullBleed />
+      {/* 1. Hero კონტეინერი */}
+      <section className="pt-6 max-w-[1400px] mx-auto px-5">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5 items-stretch">
+          <HeroCarousel news={carouselNews} showThumbnails />
+          <MainEventsPanel events={mainEvents} />
+        </div>
+      </section>
 
-      {nextEvent && (
-        <section className="pt-8 max-w-[1400px] mx-auto px-5">
+      {/* 2. კალენდარი */}
+      <div className="w-full bg-ink-2 border-y border-line mt-8">
+        <div className="max-w-[1400px] mx-auto px-5 py-14">
           <Reveal>
-            <EventCountdown event={nextEvent} />
+            <div className="flex items-baseline justify-between mb-6 flex-wrap gap-3">
+              <h2 className="font-serif font-bold text-2xl">{t("calendar")}</h2>
+              <a href="/calendar" className="text-sm font-bold text-gold hover:opacity-80 transition-opacity">{t("fullCalendar")} →</a>
+            </div>
+            <CalendarTabs events={events} limit={5} />
           </Reveal>
-        </section>
-      )}
+        </div>
+      </div>
 
+      {/* 3. Portal (შედეგები/ადმინი) */}
+      <PortalLinks links={portalLinks} />
+
+      {/* 4. სტატისტიკა */}
       <section className="py-10 max-w-[1400px] mx-auto px-5">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-line border border-line rounded-2xl overflow-hidden">
           {STATS.map(([num, lbl], i) => (
@@ -48,20 +60,6 @@ export default function HomeContent({ carouselNews, events, featuredProjects, pa
           ))}
         </div>
       </section>
-
-      <div className="w-full bg-ink-2 border-y border-line">
-        <div className="max-w-[1400px] mx-auto px-5 py-14">
-          <Reveal>
-            <div className="flex items-baseline justify-between mb-6 flex-wrap gap-3">
-              <h2 className="font-serif font-bold text-2xl">{t("calendar")}</h2>
-              <a href="/calendar" className="text-sm font-bold text-gold hover:opacity-80 transition-opacity">{t("fullCalendar")} →</a>
-            </div>
-            <CalendarTabs events={events} limit={5} />
-          </Reveal>
-        </div>
-      </div>
-
-      <PortalLinks />
 
       {featuredProjects.length > 0 && (
         <div className="w-full py-16">

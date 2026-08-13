@@ -10,6 +10,8 @@ const ALLOWED_TYPES = [
   "application/vnd.ms-excel", // .xls
 ];
 
+const MAX_SIZE_BYTES = 4 * 1024 * 1024; // 4MB — Vercel-ის სერვერული ფუნქციის ლიმიტი 4.5MB-ია, ამაზე მეტს თავად Vercel უარყოფს
+
 export async function POST(request) {
   const formData = await request.formData();
   const file = formData.get("file");
@@ -19,6 +21,9 @@ export async function POST(request) {
   }
   if (!ALLOWED_TYPES.includes(file.type)) {
     return NextResponse.json({ error: "დაშვებულია მხოლოდ PDF, JPG, PNG, WEBP ან XLSX" }, { status: 400 });
+  }
+  if (file.size > MAX_SIZE_BYTES) {
+    return NextResponse.json({ error: "ფაილი ძალიან დიდია — მაქსიმუმ 4MB დაშვებულია" }, { status: 400 });
   }
 
   const admin = getAdminClient();

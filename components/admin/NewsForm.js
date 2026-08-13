@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "./Toast";
 import { slugify } from "@/lib/slugify";
 import Image from "next/image";
+import TranslateButton from "./TranslateButton";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -17,8 +18,10 @@ export default function NewsForm({ initial, id }) {
     slug: initial?.slug || "",
     date: initial?.date || "",
     title: initial?.title || "",
+    title_en: initial?.title_en || "",
     image_url: initial?.image_url || "",
     body: initial?.body || "",
+    body_en: initial?.body_en || "",
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -100,8 +103,20 @@ export default function NewsForm({ initial, id }) {
   return (
     <form onSubmit={handleSubmit} className="max-w-xl flex flex-col gap-4">
       <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სათაური</label>
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">
+          სათაური <span className="text-gold">(ქართული)</span>
+        </label>
         <input className={FIELD_CLASS} value={form.title} onChange={(e) => handleTitleChange(e.target.value)} required />
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="block text-xs uppercase tracking-wide opacity-55">
+            სათაური <span className="text-gold">(ინგლისური — არასავალდებულო, ცარიელობისას ქართული გამოჩნდება)</span>
+          </label>
+          <TranslateButton sourceText={form.title} onTranslated={(text) => update("title_en", text)} />
+        </div>
+        <input className={FIELD_CLASS} value={form.title_en} onChange={(e) => update("title_en", e.target.value)} />
       </div>
 
       <div>
@@ -119,7 +134,7 @@ export default function NewsForm({ initial, id }) {
         {form.image_url ? (
           <div className="relative">
             <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-line">
-              <Image src={form.image_url} alt="" fill className="object-cover" />
+              <Image src={form.image_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />
             </div>
             <button
               type="button"
@@ -153,8 +168,20 @@ export default function NewsForm({ initial, id }) {
       </div>
 
       <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სრული ტექსტი</label>
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">
+          სრული ტექსტი <span className="text-gold">(ქართული)</span>
+        </label>
         <textarea className={FIELD_CLASS} rows={6} value={form.body} onChange={(e) => update("body", e.target.value)} required />
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="block text-xs uppercase tracking-wide opacity-55">
+            სრული ტექსტი <span className="text-gold">(ინგლისური — არასავალდებულო)</span>
+          </label>
+          <TranslateButton sourceText={form.body} onTranslated={(text) => update("body_en", text)} />
+        </div>
+        <textarea className={FIELD_CLASS} rows={6} value={form.body_en} onChange={(e) => update("body_en", e.target.value)} />
       </div>
 
       {error && <p className="text-crimson text-sm">{error}</p>}

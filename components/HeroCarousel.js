@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const INTERVAL_MS = 5000;
 
-export default function HeroCarousel({ news, fullBleed = false }) {
+export default function HeroCarousel({ news, fullBleed = false, showThumbnails = false }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -27,15 +27,16 @@ export default function HeroCarousel({ news, fullBleed = false }) {
   }
 
   const containerClass = fullBleed
-    ? "relative overflow-hidden h-[440px] md:h-[560px] w-full"
-    : "relative rounded-3xl overflow-hidden border border-line h-[440px] md:h-[500px]";
+    ? "relative overflow-hidden h-[520px] md:h-[640px] w-full"
+    : "relative rounded-3xl overflow-hidden border border-line h-[520px] md:h-[640px]";
 
   return (
-    <div
-      className={containerClass}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div>
+      <div
+        className={containerClass}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
       {news.map((item, i) => (
         <div
           key={item.slug}
@@ -44,25 +45,15 @@ export default function HeroCarousel({ news, fullBleed = false }) {
           }`}
         >
           {item.image_url ? (
-            <>
-              {/* ოდნავ ბუნდოვანი, გაზრდილი ასლი ავსებს მთელ ფონს */}
-              <Image
-                src={item.image_url}
-                alt=""
-                fill
-                aria-hidden="true"
-                className="object-cover blur-lg scale-105 opacity-70"
-              />
-              {/* რეალური ფოტო სრულად, დაუჭრელად — აქტიურ სლაიდზე ნელი zoom (Ken Burns) */}
-              <Image
-                key={i === active ? `active-${item.slug}` : item.slug}
-                src={item.image_url}
-                alt={item.title}
-                fill
-                priority={i === 0}
-                className={`object-contain ${i === active ? "ken-burns" : ""}`}
-              />
-            </>
+            <Image
+              key={i === active ? `active-${item.slug}` : item.slug}
+              src={item.image_url}
+              alt={item.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 1100px"
+              priority={i === 0}
+              className={`object-cover ${i === active ? "ken-burns" : ""}`}
+            />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]" />
           )}
@@ -70,7 +61,7 @@ export default function HeroCarousel({ news, fullBleed = false }) {
           <div className="absolute inset-0 bg-gradient-to-t from-[#14171c] via-[#14171c]/40 to-transparent" />
 
           <Link href={`/news/${item.slug}`} className="absolute inset-0 flex flex-col justify-end">
-            <div className="max-w-[1400px] w-full mx-auto px-5 md:px-8 pb-10 md:pb-14">
+            <div className="w-full px-5 md:px-8 pb-10 md:pb-14">
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2.5 mb-3">
                   {item.medal && (
@@ -87,7 +78,7 @@ export default function HeroCarousel({ news, fullBleed = false }) {
         </div>
       ))}
 
-      {news.length > 1 && (
+      {news.length > 1 && !showThumbnails && (
         <>
           <button
             onClick={goPrev}
@@ -106,7 +97,7 @@ export default function HeroCarousel({ news, fullBleed = false }) {
         </>
       )}
 
-      {news.length > 1 && (
+      {news.length > 1 && !showThumbnails && (
         <div className="absolute bottom-6 md:bottom-8 left-0 right-0 z-20">
           <div className="max-w-[1400px] mx-auto px-5 md:px-8 flex justify-end gap-2">
             {news.map((item, i) => (
@@ -120,6 +111,46 @@ export default function HeroCarousel({ news, fullBleed = false }) {
               />
             ))}
           </div>
+        </div>
+      )}
+      </div>
+
+      {/* თამბნეილების ზოლი — მთავარი ეკრანის ქვემოთ, ისრებით */}
+      {showThumbnails && news.length > 1 && (
+        <div className="flex items-center gap-3 mt-3">
+          <button
+            onClick={goPrev}
+            aria-label="წინა სიახლე"
+            className="shrink-0 w-9 h-9 rounded-full border border-line flex items-center justify-center hover:border-gold hover:text-gold transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
+
+          <div className="flex-1 grid grid-cols-4 gap-2.5">
+            {news.map((item, i) => (
+              <button
+                key={item.slug}
+                onClick={() => setActive(i)}
+                className={`relative aspect-video rounded-lg overflow-hidden border-2 transition-all ${
+                  i === active ? "border-gold" : "border-line opacity-60 hover:opacity-100"
+                }`}
+              >
+                {item.image_url ? (
+                  <Image src={item.image_url} alt={item.title} fill sizes="(max-width: 640px) 25vw, 200px" className="object-cover" />
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={goNext}
+            aria-label="შემდეგი სიახლე"
+            className="shrink-0 w-9 h-9 rounded-full border border-line flex items-center justify-center hover:border-gold hover:text-gold transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </button>
         </div>
       )}
     </div>

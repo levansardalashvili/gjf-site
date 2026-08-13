@@ -48,6 +48,7 @@ export default function EventForm({ initial, id, defaultCategory }) {
     location: initial?.location || "",
     category: initial?.category || defaultCategory || "international",
     description: initial?.description || "",
+    is_main_event: initial?.is_main_event || false,
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -172,6 +173,18 @@ export default function EventForm({ initial, id, defaultCategory }) {
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">აღწერა</label>
         <textarea className={FIELD_CLASS} rows={4} value={form.description} onChange={(e) => update("description", e.target.value)} />
       </div>
+
+      <label className="flex items-center gap-2.5 text-sm bg-ink border border-line rounded-lg px-3.5 py-3">
+        <input
+          type="checkbox"
+          checked={form.is_main_event}
+          onChange={(e) => update("is_main_event", e.target.checked)}
+        />
+        <span>
+          <span className="font-semibold">მთავარი ღონისძიება</span>
+          <span className="block text-xs opacity-55">მთავარ გვერდზე, "მთავარი ღონისძიებები" პანელში გამოჩნდება</span>
+        </span>
+      </label>
 
       {error && <p className="text-crimson text-sm">{error}</p>}
 

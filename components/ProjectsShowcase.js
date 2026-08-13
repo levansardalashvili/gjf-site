@@ -1,8 +1,11 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import Reveal from "./Reveal";
+import { useLanguage } from "@/lib/i18n";
 
 export default function ProjectsShowcase({ projects }) {
+  const { t, lang } = useLanguage();
   if (projects.length === 0) return null;
 
   return (
@@ -10,6 +13,8 @@ export default function ProjectsShowcase({ projects }) {
       {projects.map((p, i) => {
         const number = String(i + 1).padStart(2, "0");
         const imageOnRight = i % 2 === 1; // მონაცვლეობით: ლუწზე ფოტო მარჯვნივ
+        const displayTitle = (lang === "en" && p.title_en) ? p.title_en : p.title;
+        const displayExcerpt = (lang === "en" && p.excerpt_en) ? p.excerpt_en : p.excerpt;
 
         return (
           <div
@@ -22,8 +27,9 @@ export default function ProjectsShowcase({ projects }) {
                   {p.image_url && (
                     <Image
                       src={p.image_url}
-                      alt={p.title}
+                      alt={displayTitle}
                       fill
+                      sizes="(max-width: 768px) 100vw, 700px"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   )}
@@ -36,15 +42,15 @@ export default function ProjectsShowcase({ projects }) {
                 {number}
               </span>
               <div className="text-xs uppercase tracking-wider text-crimson font-bold mb-2">
-                პროექტი · {number}
+                {t("project")} · {number}
               </div>
-              <h3 className="font-serif font-bold text-2xl md:text-3xl leading-tight mb-3">{p.title}</h3>
-              {p.excerpt && <p className="opacity-65 leading-relaxed mb-4">{p.excerpt}</p>}
+              <h3 className="font-serif font-bold text-2xl md:text-3xl leading-tight mb-3">{displayTitle}</h3>
+              {displayExcerpt && <p className="opacity-65 leading-relaxed mb-4">{displayExcerpt}</p>}
               <Link
                 href={`/federation/projects/${p.slug}`}
                 className="inline-block text-sm font-bold text-gold hover:opacity-80 transition-opacity"
               >
-                დეტალურად →
+                {t("viewDetails")} →
               </Link>
             </Reveal>
           </div>

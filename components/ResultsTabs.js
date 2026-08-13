@@ -18,7 +18,7 @@ const PER_PAGE = 15;
 export default function ResultsTabs({ results }) {
   const [tab, setTab] = useState("standart");
   const [page, setPage] = useState(1);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const filtered = useMemo(() => results.filter((r) => r.age_group === tab), [results, tab]);
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
@@ -59,7 +59,7 @@ export default function ResultsTabs({ results }) {
                       {r.medal}
                     </span>
                   )}
-                  <h3 className="font-serif font-bold text-base leading-snug mb-2">{r.event_name}</h3>
+                  <h3 className="font-serif font-bold text-base leading-snug mb-2">{(lang === "en" && r.event_name_en) ? r.event_name_en : r.event_name}</h3>
                   <div className="text-xs opacity-55 space-y-0.5">
                     {r.event_date && <div className="flex items-center gap-1.5"><Icon name="calendar" size={13} />{r.event_date}</div>}
                     {r.weight && <div>{r.weight}</div>}

@@ -51,7 +51,7 @@ export default function Lightbox({ photos, startIndex, onClose }) {
       )}
 
       <div className="relative w-full h-full max-w-5xl max-h-[85vh] mx-auto my-auto px-16">
-        <Image src={photo.image_url} alt="" fill className="object-contain" priority />
+        <Image src={photo.image_url} alt="" fill sizes="(max-width: 1024px) 100vw, 1024px" className="object-contain" priority />
       </div>
 
       {photos.length > 1 && (

@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "./Toast";
+import TranslateButton from "./TranslateButton";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -12,6 +13,7 @@ export default function ResultForm({ initial, id, defaultCategory, defaultAgeGro
     category: initial?.category || defaultCategory || "georgia",
     age_group: initial?.age_group || defaultAgeGroup || "standart",
     event_name: initial?.event_name || "",
+    event_name_en: initial?.event_name_en || "",
     event_date: initial?.event_date || "",
     source_url: initial?.source_url || "",
     file_url: initial?.file_url || "",
@@ -90,8 +92,15 @@ export default function ResultForm({ initial, id, defaultCategory, defaultAgeGro
         </div>
       </div>
       <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">ღონისძიების დასახელება</label>
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">ღონისძიების დასახელება <span className="text-gold">(ქართული)</span></label>
         <input className={FIELD_CLASS} value={form.event_name} onChange={(e) => update("event_name", e.target.value)} required />
+      </div>
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="block text-xs uppercase tracking-wide opacity-55">ღონისძიების დასახელება <span className="text-gold">(ინგლისური — არასავალდებულო)</span></label>
+          <TranslateButton sourceText={form.event_name} onTranslated={(t) => update("event_name_en", t)} />
+        </div>
+        <input className={FIELD_CLASS} value={form.event_name_en} onChange={(e) => update("event_name_en", e.target.value)} />
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">თარიღი</label>

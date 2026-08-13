@@ -6,6 +6,17 @@ import { useToast } from "./Toast";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
+// PageForm ბევრგან გამოიყენება (კონტაქტი, ისტორია, ფედერაცია, ნაკრები) —
+// შენახვის შემდეგ იმ ჰაბ-გვერდზე ვბრუნდებით, საიდანაც ეს ჩანაწერი მოვიდა.
+function returnPath(slug) {
+  if (!slug) return "/admin/pages";
+  if (slug.startsWith("contact-")) return "/admin/contact";
+  if (slug.startsWith("federation-")) return "/admin/federation";
+  if (slug.startsWith("judo-")) return "/admin/history";
+  if (slug === "national-team-staff") return "/admin/teams";
+  return "/admin/pages";
+}
+
 export default function PageForm({ initial, id }) {
   const [form, setForm] = useState({
     title: initial?.title || "",
@@ -62,7 +73,7 @@ export default function PageForm({ initial, id }) {
     setSaving(false);
     if (res.ok) {
       showToast("წარმატებით შესრულდა — ცვლილებები დამახსოვრებულია", "success");
-      router.push("/admin/pages");
+      router.push(returnPath(initial?.slug));
       router.refresh();
     } else {
       const data = await res.json();

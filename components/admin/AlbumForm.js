@@ -85,7 +85,7 @@ export default function AlbumForm({ initial, id }) {
         {form.cover_image_url ? (
           <div className="relative">
             <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden border border-line">
-              <Image src={form.cover_image_url} alt="" fill className="object-cover" />
+              <Image src={form.cover_image_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />
             </div>
             <button type="button" onClick={() => update("cover_image_url", "")} className="mt-2 text-xs text-crimson font-semibold">
               წაშლა და სხვის ატვირთვა

@@ -27,7 +27,7 @@ export default async function FederationStaffPage() {
               <div className="bg-ink-2 border border-line rounded-2xl p-6 h-full flex items-center gap-4 hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
                 {s.photo_url ? (
                   <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0">
-                    <Image src={s.photo_url} alt={s.name} fill className="object-cover" />
+                    <Image src={s.photo_url} alt={s.name} fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />
                   </div>
                 ) : (
                   <div className="w-16 h-16 rounded-full bg-gold/15 text-gold font-serif font-bold text-xl flex items-center justify-center shrink-0">

@@ -27,7 +27,7 @@ export default async function AdminAlbumPhotosPage({ params }) {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {photos.map((p) => (
           <div key={p.id} className="relative group aspect-square rounded-lg overflow-hidden border border-line">
-            <Image src={p.image_url} alt="" fill className="object-cover" />
+            <Image src={p.image_url} alt="" fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover" />
             <div className="absolute inset-0 bg-ink/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <DeleteButton endpoint={`/api/gallery/${p.id}`} confirmText="ეს ფოტო მუდმივად წაიშლება." />
             </div>

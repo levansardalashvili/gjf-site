@@ -34,7 +34,7 @@ export default async function GalleryPhotoPage() {
                 >
                   <div className="relative aspect-[4/3] bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]">
                     {a.cover_image_url && (
-                      <Image src={a.cover_image_url} alt={a.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <Image src={a.cover_image_url} alt={a.title} fill sizes="(max-width: 768px) 100vw, 400px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                     )}
                   </div>
                   <div className="p-4">
