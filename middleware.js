@@ -5,7 +5,7 @@ import { createServerClient } from "@supabase/ssr";
 // API-ები: /api/* (login/logout/invite-ის endpoint-ების გარდა, რომლებსაც თავად სჭირდებათ
 // უსესიო წვდომა) — არაავტორიზებულს 401-ს დაუბრუნებს.
 const PUBLIC_ADMIN_PAGES = ["/admin/login", "/admin/set-password"];
-const PUBLIC_API_PATHS = ["/api/admin/login", "/api/admin/logout", "/api/search"];
+const PUBLIC_API_PATHS = ["/api/admin/login", "/api/admin/logout", "/api/search", "/api/contact-messages"];
 
 export async function middleware(request, event) {
   const { pathname } = request.nextUrl;

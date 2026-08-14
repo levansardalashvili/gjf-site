@@ -16,6 +16,7 @@ export default function SearchModal({ open, onClose }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [rateLimited, setRateLimited] = useState(false);
   const inputRef = useRef(null);
   const router = useRouter();
 
@@ -44,6 +45,12 @@ export default function SearchModal({ open, onClose }) {
     const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
     const data = await res.json();
     setLoading(false);
+    if (res.status === 429) {
+      setRateLimited(true);
+      setResults(null);
+      return;
+    }
+    setRateLimited(false);
     setResults(data);
   }, []);
 
@@ -81,6 +88,10 @@ export default function SearchModal({ open, onClose }) {
 
         <div className="overflow-y-auto">
           {loading && <p className="text-sm opacity-50 p-6 text-center">იძებნება...</p>}
+
+          {rateLimited && (
+            <p className="text-sm text-crimson p-6 text-center">მოთხოვნები ძალიან ხშირია — ცოტა ხნის შემდეგ სცადე.</p>
+          )}
 
           {!loading && query.trim().length >= 2 && results && totalHits === 0 && (
             <p className="text-sm opacity-50 p-6 text-center">ვერაფერი მოიძებნა "{query}"-სთვის.</p>

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { getPageBySlug, getAllSocialLinks } from "@/lib/queries";
 import Trans from "@/components/Trans";
 import SocialIcons from "@/components/SocialIcons";
+import ContactForm from "@/components/ContactForm";
 
 export const revalidate = 0;
 
@@ -49,16 +50,19 @@ export default async function ContactPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl overflow-hidden border border-line mb-16">
-          <iframe
-            title="შოთა ჩოჩიშვილის სახელობის ძიუდოს აკადემია — რუკა"
-            src="https://www.google.com/maps?q=%E1%83%A8%E1%83%9D%E1%83%97%E1%83%90+%E1%83%A9%E1%83%9D%E1%83%A9%E1%83%98%E1%83%A8%E1%83%95%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1+%E1%83%A1%E1%83%90%E1%83%AE%E1%83%94%E1%83%9A%E1%83%9D%E1%83%91%E1%83%98%E1%83%A1+%E1%83%AB%E1%83%98%E1%83%A3%E1%83%93%E1%83%9D%E1%83%A1+%E1%83%90%E1%83%99%E1%83%90%E1%83%93%E1%83%94%E1%83%9B%E1%83%98%E1%83%90%2C+%E1%83%91%E1%83%94%E1%83%9A%E1%83%98%E1%83%90%E1%83%A8%E1%83%95%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1+%E1%83%A5%E1%83%A3%E1%83%A9%E1%83%90+38%2C+%E1%83%97%E1%83%91%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1%E1%83%98&output=embed"
-            width="100%"
-            height="400"
-            style={{ border: 0 }}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-5 mb-16">
+          <div className="rounded-2xl overflow-hidden border border-line">
+            <iframe
+              title="შოთა ჩოჩიშვილის სახელობის ძიუდოს აკადემია — რუკა"
+              src="https://www.google.com/maps?q=%E1%83%A8%E1%83%9D%E1%83%97%E1%83%90+%E1%83%A9%E1%83%9D%E1%83%A9%E1%83%98%E1%83%A8%E1%83%95%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1+%E1%83%A1%E1%83%90%E1%83%AE%E1%83%94%E1%83%9A%E1%83%9D%E1%83%91%E1%83%98%E1%83%A1+%E1%83%AB%E1%83%98%E1%83%A3%E1%83%93%E1%83%9D%E1%83%A1+%E1%83%90%E1%83%99%E1%83%90%E1%83%93%E1%83%94%E1%83%9B%E1%83%98%E1%83%90%2C+%E1%83%91%E1%83%94%E1%83%9A%E1%83%98%E1%83%90%E1%83%A8%E1%83%95%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1+%E1%83%A5%E1%83%A3%E1%83%A9%E1%83%90+38%2C+%E1%83%97%E1%83%91%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1%E1%83%98&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0, minHeight: 400 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <ContactForm />
         </div>
       </main>
       <Footer />

@@ -17,6 +17,7 @@ const LINKS = [
   { href: "/admin/gallery", label: "გალერეა" },
   { href: "/admin/history", label: "ისტორია" },
   { href: "/admin/contact", label: "კონტაქტი" },
+  { href: "/admin/contact-messages", label: "შეტყობინებები" },
 ];
 
 // ეს არ არის საიტის მთავარ მენიუში, მაგრამ მაინც საჭიროა admin-იდან სამართავად

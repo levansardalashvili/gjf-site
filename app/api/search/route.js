@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { isRateLimited } from "@/lib/rateLimit";
 
 const LIMIT = 5;
 
@@ -9,6 +10,11 @@ function sanitize(q) {
 }
 
 export async function GET(request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (isRateLimited(`search:${ip}`, { windowMs: 60_000, max: 20 })) {
+    return NextResponse.json({ error: "მოთხოვნები ძალიან ხშირია — ცოტა ხნის შემდეგ სცადე" }, { status: 429 });
+  }
+
   const { searchParams } = new URL(request.url);
   const raw = (searchParams.get("q") || "").trim();
 
