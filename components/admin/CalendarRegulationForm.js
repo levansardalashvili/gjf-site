@@ -103,7 +103,7 @@ export default function CalendarRegulationForm({ initial, id }) {
         ) : (
           <input
             type="file"
-            accept="application/pdf,.xlsx,.xls"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.csv,.rtf,.zip"
             disabled={uploading}
             onChange={handleFileChange}
             className="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-crimson file:text-white file:text-sm file:font-semibold"

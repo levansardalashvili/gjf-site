@@ -8,6 +8,14 @@ const ALLOWED_TYPES = [
   "image/webp",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
   "application/vnd.ms-excel", // .xls
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+  "application/msword", // .doc
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
+  "application/vnd.ms-powerpoint", // .ppt
+  "text/plain", // .txt
+  "text/csv", // .csv
+  "application/rtf", // .rtf
+  "application/zip", // .zip
 ];
 
 const MAX_SIZE_BYTES = 4 * 1024 * 1024; // 4MB — Vercel-ის სერვერული ფუნქციის ლიმიტი 4.5MB-ია, ამაზე მეტს თავად Vercel უარყოფს
@@ -20,7 +28,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "ფაილი არ მოიძებნა" }, { status: 400 });
   }
   if (!ALLOWED_TYPES.includes(file.type)) {
-    return NextResponse.json({ error: "დაშვებულია მხოლოდ PDF, JPG, PNG, WEBP ან XLSX" }, { status: 400 });
+    return NextResponse.json({ error: "დაშვებულია PDF, Word, Excel, PowerPoint, TXT, CSV, ZIP ან სურათი (JPG/PNG/WEBP)" }, { status: 400 });
   }
   if (file.size > MAX_SIZE_BYTES) {
     return NextResponse.json({ error: "ფაილი ძალიან დიდია — მაქსიმუმ 4MB დაშვებულია" }, { status: 400 });

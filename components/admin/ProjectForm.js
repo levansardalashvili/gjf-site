@@ -139,7 +139,7 @@ export default function ProjectForm({ initial, id }) {
         ) : (
           <input
             type="file"
-            accept="application/pdf"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.csv,.rtf,.zip"
             disabled={uploadingFile}
             onChange={(e) => e.target.files[0] && uploadTo(e.target.files[0], (d) => { update("file_url", d.url); update("file_name", d.name); }, setUploadingFile)}
             className="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-crimson file:text-white file:text-sm file:font-semibold"

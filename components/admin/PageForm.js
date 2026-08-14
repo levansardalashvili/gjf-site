@@ -111,7 +111,7 @@ export default function PageForm({ initial, id }) {
         ) : (
           <input
             type="file"
-            accept="application/pdf"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.csv,.rtf,.zip"
             onChange={handleFileChange}
             disabled={uploading}
             className="text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-crimson file:text-white file:text-sm file:font-semibold"
