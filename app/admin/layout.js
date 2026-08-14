@@ -24,6 +24,7 @@ const EXTRA_LINKS = [
   { href: "/admin/partners", label: "პარტნიორები" },
   { href: "/admin/portal-links", label: "Portal ბლოკი" },
   { href: "/admin/users", label: "თანამშრომლები" },
+  { href: "/admin/activity", label: "აქტივობა" },
 ];
 
 const PUBLIC_PAGES = ["/admin/login", "/admin/set-password"];

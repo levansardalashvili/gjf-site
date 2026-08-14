@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getAllTeamMembers } from "@/lib/queries";
 import DeleteButton from "@/components/admin/DeleteButton";
 import { notFound } from "next/navigation";
@@ -26,9 +27,18 @@ export default async function AdminTeamMembersCategoryPage({ params }) {
 
       <div className="bg-ink-2 border border-line rounded-2xl overflow-hidden">
         {members.map((m) => (
-          <div key={m.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
-            <div className="min-w-0">
-              <div className="text-xs opacity-50">{m.weight}</div>
+          <div key={m.id} className="flex items-center gap-4 px-5 py-4 border-b border-line last:border-0">
+            {m.photo_url ? (
+              <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0">
+                <Image src={m.photo_url} alt={m.name} fill sizes="44px" className="object-cover" />
+              </div>
+            ) : (
+              <div className="w-11 h-11 rounded-full bg-gold/15 text-gold font-bold flex items-center justify-center shrink-0">
+                {m.name.charAt(0)}
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="text-xs opacity-50">{m.weight}{m.club && ` · ${m.club}`}</div>
               <div className="font-semibold truncate">{m.name}</div>
             </div>
             <div className="flex items-center gap-4 shrink-0">

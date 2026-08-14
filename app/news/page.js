@@ -17,7 +17,15 @@ export default async function NewsArchive() {
       <main className="max-w-[1400px] mx-auto px-5">
         <div className="pt-10 pb-7">
           <div className="text-sm opacity-50 mb-3.5"><Trans k="home_bc" /> / <Trans k="news" /></div>
-          <h1 className="font-serif font-bold text-3xl md:text-4xl"><Trans k="news" /></h1>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <h1 className="font-serif font-bold text-3xl md:text-4xl"><Trans k="news" /></h1>
+            <a
+              href="/feed.xml"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold opacity-55 hover:opacity-100 hover:text-gold transition-colors border border-line rounded-full px-3 py-1.5"
+            >
+              RSS
+            </a>
+          </div>
         </div>
 
         <div className="flex gap-2.5 overflow-x-auto pb-1.5 mb-8 no-scrollbar">

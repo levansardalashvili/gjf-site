@@ -1,10 +1,14 @@
 import { getAllNews, getNewsBySlug } from "@/lib/queries";
+import { stripHtml } from "@/lib/stripHtml";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
 import NewsDetailContent from "@/components/NewsDetailContent";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import Trans from "@/components/Trans";
 import { notFound } from "next/navigation";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
 export const revalidate = 60;
 
@@ -13,10 +17,10 @@ export async function generateMetadata({ params }) {
   if (!item) return {};
   return {
     title: item.title,
-    description: item.body?.slice(0, 160),
+    description: stripHtml(item.body)?.slice(0, 160),
     openGraph: {
       title: item.title,
-      description: item.body?.slice(0, 160),
+      description: stripHtml(item.body)?.slice(0, 160),
       type: "article",
       images: item.image_url ? [item.image_url] : [],
     },
@@ -33,6 +37,13 @@ export default async function NewsDetailPage({ params }) {
   return (
     <>
       <Header />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "მთავარი", url: SITE_URL },
+          { name: "სიახლეები", url: `${SITE_URL}/news` },
+          { name: item.title, url: `${SITE_URL}/news/${item.slug}` },
+        ]}
+      />
       <main className="max-w-3xl mx-auto px-5">
         <NewsDetailContent item={item} />
         {related.length > 0 && (

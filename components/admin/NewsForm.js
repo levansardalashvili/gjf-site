@@ -6,6 +6,7 @@ import { useToast } from "./Toast";
 import { slugify } from "@/lib/slugify";
 import Image from "next/image";
 import TranslateButton from "./TranslateButton";
+import RichTextEditor from "./RichTextEditor";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -171,7 +172,7 @@ export default function NewsForm({ initial, id }) {
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">
           სრული ტექსტი <span className="text-gold">(ქართული)</span>
         </label>
-        <textarea className={FIELD_CLASS} rows={6} value={form.body} onChange={(e) => update("body", e.target.value)} required />
+        <RichTextEditor value={form.body} onChange={(html) => update("body", html)} />
       </div>
 
       <div>
@@ -181,7 +182,7 @@ export default function NewsForm({ initial, id }) {
           </label>
           <TranslateButton sourceText={form.body} onTranslated={(text) => update("body_en", text)} />
         </div>
-        <textarea className={FIELD_CLASS} rows={6} value={form.body_en} onChange={(e) => update("body_en", e.target.value)} />
+        <RichTextEditor value={form.body_en} onChange={(html) => update("body_en", html)} />
       </div>
 
       {error && <p className="text-crimson text-sm">{error}</p>}

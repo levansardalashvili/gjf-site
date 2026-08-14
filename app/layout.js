@@ -1,5 +1,6 @@
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
+import { Analytics } from "@vercel/analytics/react";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
@@ -17,6 +18,9 @@ export const metadata = {
     siteName: "საქართველოს ძიუდოს ფედერაცია",
     locale: "ka_GE",
     type: "website",
+  },
+  alternates: {
+    types: { "application/rss+xml": `${SITE_URL}/feed.xml` },
   },
 };
 
@@ -43,6 +47,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );

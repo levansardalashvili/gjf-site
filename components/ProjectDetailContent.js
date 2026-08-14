@@ -36,7 +36,7 @@ export default function ProjectDetailContent({ project }) {
           </a>
         )}
 
-        <div className="whitespace-pre-line leading-relaxed opacity-90 pb-16">{body}</div>
+        <div className="leading-relaxed opacity-90 pb-16 rich-content" dangerouslySetInnerHTML={{ __html: body }} />
       </article>
     </>
   );

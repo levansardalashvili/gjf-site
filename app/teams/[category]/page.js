@@ -1,7 +1,10 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Trans from "@/components/Trans";
-import { TEAM_CATEGORIES, getTeamCategory } from "@/lib/teams";
+import Reveal from "@/components/Reveal";
+import Image from "next/image";
+import Link from "next/link";
+import { getTeamCategory } from "@/lib/teams";
 import { getTeamMembersByCategory } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
@@ -22,7 +25,7 @@ export default async function TeamCategoryPage({ params }) {
   return (
     <>
       <Header />
-      <main className="max-w-4xl mx-auto px-5">
+      <main className="max-w-[1400px] mx-auto px-5">
         <div className="pt-10 pb-7">
           <div className="text-sm opacity-50 mb-3.5">
             <a href="/teams" className="hover:text-gold"><Trans k="teams" /></a> / <Trans k={team.labelKey} />
@@ -31,22 +34,30 @@ export default async function TeamCategoryPage({ params }) {
           <p className="opacity-60"><Trans k={team.descKey} /></p>
         </div>
 
-        <table className="w-full border-collapse text-sm mb-16">
-          <thead>
-            <tr>
-              <th className="text-left p-3 text-xs uppercase opacity-50 border-b border-line"><Trans k="weightCategory" /></th>
-              <th className="text-left p-3 text-xs uppercase opacity-50 border-b border-line"><Trans k="athleteLabel" /></th>
-            </tr>
-          </thead>
-          <tbody>
-            {roster.map((r) => (
-              <tr key={r.id}>
-                <td className="p-3 opacity-65 border-b border-line">{r.weight}</td>
-                <td className="p-3 border-b border-line">{r.name}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 pb-16">
+          {roster.map((r, i) => (
+            <Reveal key={r.id} delay={Math.min((i % 5) + 1, 5)}>
+              <Link
+                href={`/teams/athlete/${r.slug}`}
+                className="group block bg-ink-2 border border-line rounded-2xl overflow-hidden hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="relative aspect-square bg-ink">
+                  {r.photo_url ? (
+                    <Image src={r.photo_url} alt={r.name} fill sizes="(max-width: 768px) 50vw, 250px" className="object-cover object-top" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-3xl font-serif font-bold text-gold/30">
+                      {r.name.charAt(0)}
+                    </div>
+                  )}
+                </div>
+                <div className="p-3.5">
+                  <div className="text-xs text-crimson font-bold mb-1">{r.weight}</div>
+                  <div className="font-semibold text-sm leading-snug group-hover:text-gold transition-colors">{r.name}</div>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
         {roster.length === 0 && <p className="opacity-50 text-sm pb-16"><Trans k="noRosterYet" /></p>}
       </main>
       <Footer />

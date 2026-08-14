@@ -3,7 +3,10 @@ import Icon from "@/components/Icon";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Trans from "@/components/Trans";
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { notFound } from "next/navigation";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
 export const revalidate = 60;
 
@@ -24,6 +27,13 @@ export default async function EventDetailPage({ params }) {
   return (
     <>
       <Header />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "მთავარი", url: SITE_URL },
+          { name: "კალენდარი", url: `${SITE_URL}/calendar` },
+          { name: event.title, url: `${SITE_URL}/calendar/${event.slug}` },
+        ]}
+      />
       <main className="max-w-3xl mx-auto px-5">
         <div className="text-sm opacity-50 pt-8 pb-2">
           <a href="/calendar" className="hover:text-gold"><Trans k="calendar" /></a> / {event.title}

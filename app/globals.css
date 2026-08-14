@@ -124,3 +124,71 @@ body {
 .modal-pop {
   animation: modalPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Rich text editor (react-quill) — ჩვენს ახლანდელ (ღია) თემასთან შესაბამისობა */
+.rich-text-editor .ql-toolbar {
+  background: #f9f7f5;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-radius: 8px 8px 0 0;
+}
+.rich-text-editor .ql-container {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-radius: 0 0 8px 8px;
+  font-size: 14px;
+  min-height: 140px;
+}
+.rich-text-editor .ql-editor {
+  color: #201d1a;
+  min-height: 140px;
+}
+.rich-text-editor .ql-editor.ql-blank::before {
+  color: rgba(32, 29, 26, 0.4);
+  font-style: normal;
+}
+.rich-text-editor .ql-stroke {
+  stroke: #201d1a;
+  opacity: 0.75;
+}
+.rich-text-editor .ql-fill {
+  fill: #201d1a;
+  opacity: 0.75;
+}
+.rich-text-editor .ql-picker-label {
+  color: #201d1a;
+}
+.rich-text-editor button:hover .ql-stroke,
+.rich-text-editor button.ql-active .ql-stroke {
+  stroke: #7a2436;
+}
+.rich-text-editor button:hover .ql-fill,
+.rich-text-editor button.ql-active .ql-fill {
+  fill: #7a2436;
+}
+.rich-text-editor .ql-picker-options {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* საჯარო გვერდზე, rich text-ის რენდერი (ბოლდი, ბმულები, სიები) */
+.rich-content {
+  line-height: 1.75;
+}
+.rich-content a {
+  color: #7a2436;
+  text-decoration: underline;
+}
+.rich-content ul,
+.rich-content ol {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+.rich-content ul {
+  list-style: disc;
+}
+.rich-content ol {
+  list-style: decimal;
+}
+.rich-content p {
+  margin-bottom: 0.75rem;
+}
