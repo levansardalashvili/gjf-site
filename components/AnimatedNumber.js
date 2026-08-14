@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from "react";
 // როცა ეკრანზე გამოჩნდება. არა-რიცხვითი სიმბოლოები (მაგ. "#") უცვლელად რჩება.
 export default function AnimatedNumber({ value, duration = 1200 }) {
   const ref = useRef(null);
-  const [display, setDisplay] = useState(value.replace(/\d+/, "0"));
+  // საწყისი მდგომარეობა — რეალური რიცხვი (არა "0"), რომ საძიებო სისტემებმა
+  // და JavaScript-ის გარეშე ვიზიტორებმა ნამდვილი მონაცემი დაინახონ.
+  const [display, setDisplay] = useState(value);
   const started = useRef(false);
 
   const match = value.match(/\d+/);
@@ -25,6 +27,7 @@ export default function AnimatedNumber({ value, duration = 1200 }) {
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
+          setDisplay(`${prefix}0${suffix}`);
           const startTime = performance.now();
           function tick(now) {
             const progress = Math.min((now - startTime) / duration, 1);
