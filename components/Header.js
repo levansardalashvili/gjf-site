@@ -39,7 +39,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav — hover-dropdown */}
-          <nav className="hidden md:flex items-center gap-5 text-sm font-semibold uppercase tracking-wide opacity-90">
+          <nav className="hidden lg:flex items-center gap-3 text-sm font-semibold uppercase opacity-90">
             {NAV.map((item) => (
               <div key={item.href} className="relative group">
                 <Link href={item.href} className="flex items-center gap-1 py-2 hover:text-gold">
@@ -73,7 +73,7 @@ export default function Header() {
               </div>
             ))}
 
-            <div className="w-px h-5 bg-line mx-4" />
+            <div className="w-px h-5 bg-line mx-2 shrink-0" />
             <button
               onClick={() => setSearchOpen(true)}
               className="opacity-70 hover:opacity-100 hover:text-gold transition-colors normal-case shrink-0"
@@ -81,10 +81,10 @@ export default function Header() {
             >
               <Icon name="search" size={18} />
             </button>
-            <LanguageSwitcher lang={lang} setLang={setLang} className="ml-3" />
+            <LanguageSwitcher lang={lang} setLang={setLang} className="ml-2" />
           </nav>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={() => setSearchOpen(true)}
               className="w-[38px] h-[38px] border border-line rounded-lg flex items-center justify-center shrink-0"

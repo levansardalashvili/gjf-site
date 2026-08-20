@@ -88,7 +88,7 @@ export default function Footer() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Facebook"
-                      className="w-9 h-9 rounded-full border border-line flex items-center justify-center opacity-70 hover:opacity-100 hover:border-gold hover:text-gold hover:-translate-y-0.5 transition-all duration-300"
+                      className="w-9 h-9 rounded-full border border-line flex items-center justify-center opacity-70 hover:opacity-100 hover:border-[#1877F2] hover:text-[#1877F2] hover:-translate-y-0.5 transition-all duration-300"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.17 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.77 8.44-4.94 8.44-9.94Z" />
@@ -99,7 +99,7 @@ export default function Footer() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Instagram"
-                      className="w-9 h-9 rounded-full border border-line flex items-center justify-center opacity-70 hover:opacity-100 hover:border-gold hover:text-gold hover:-translate-y-0.5 transition-all duration-300"
+                      className="w-9 h-9 rounded-full border border-line flex items-center justify-center opacity-70 hover:opacity-100 hover:border-[#E1306C] hover:text-[#E1306C] hover:-translate-y-0.5 transition-all duration-300"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                         <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -112,7 +112,7 @@ export default function Footer() {
                       target="_blank"
                       rel="noreferrer"
                       aria-label="YouTube"
-                      className="w-9 h-9 rounded-full border border-line flex items-center justify-center opacity-70 hover:opacity-100 hover:border-gold hover:text-gold hover:-translate-y-0.5 transition-all duration-300"
+                      className="w-9 h-9 rounded-full border border-line flex items-center justify-center opacity-70 hover:opacity-100 hover:border-[#FF0000] hover:text-[#FF0000] hover:-translate-y-0.5 transition-all duration-300"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M23 12s0-3.6-.46-5.3a3 3 0 0 0-2.1-2.1C18.7 4 12 4 12 4s-6.7 0-8.44.6a3 3 0 0 0-2.1 2.1C1 8.4 1 12 1 12s0 3.6.46 5.3a3 3 0 0 0 2.1 2.1C5.3 20 12 20 12 20s6.7 0 8.44-.6a3 3 0 0 0 2.1-2.1C23 15.6 23 12 23 12Z" opacity=".18"/>
