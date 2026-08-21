@@ -34,6 +34,8 @@ const jsonLd = {
   sport: "Judo",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "ბელიაშვილის ქუჩა 38",
+    addressLocality: "თბილისი",
     addressCountry: "GE",
   },
 };

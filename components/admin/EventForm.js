@@ -1,6 +1,6 @@
 "use client";
 import Icon from "@/components/Icon";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "./Toast";
 import { slugify } from "@/lib/slugify";
@@ -37,7 +37,7 @@ function formatDateRange(startISO, endISO) {
 export default function EventForm({ initial, id, defaultCategory }) {
   const isEdit = Boolean(id);
   const [slugTouched, setSlugTouched] = useState(isEdit);
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState(initial?.event_date || "");
   const [endDate, setEndDate] = useState("");
   const [form, setForm] = useState({
     slug: initial?.slug || "",
@@ -78,8 +78,15 @@ export default function EventForm({ initial, id, defaultCategory }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.category]);
 
-  // თარიღების არჩევისას day/month/date_range ავტომატურად გამოითვლება
+  // თარიღების არჩევისას day/month/date_range ავტომატურად გამოითვლება.
+  // რედაქტირებისას, პირველივე ჩატვირთვაზე კი ეს არ ვამოქმედებთ — თორემ
+  // არსებული, სწორი (მაგ. მრავალდღიანი) date_range ავტომატურად გადაიწერებოდა.
+  const skipFirstRun = useRef(isEdit);
   useEffect(() => {
+    if (skipFirstRun.current) {
+      skipFirstRun.current = false;
+      return;
+    }
     if (!startDate) return;
     const d = new Date(startDate + "T00:00:00");
     setForm((f) => ({

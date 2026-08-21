@@ -7,7 +7,7 @@ export default function ArticleJsonLd({ title, description, imageUrl, datePublis
     ...(description ? { description } : {}),
     ...(imageUrl ? { image: [imageUrl] } : {}),
     ...(datePublished ? { datePublished } : {}),
-    author: { "@type": "Organization", name: "საქართველოს ძიუდოს ფედერაცია" },
+    author: { "@type": "Organization", name: "საქართველოს ძიუდოს ფედერაცია", url: new URL(url).origin },
     publisher: {
       "@type": "Organization",
       name: "საქართველოს ძიუდოს ფედერაცია",

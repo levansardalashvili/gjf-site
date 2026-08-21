@@ -105,7 +105,7 @@ export default function ResultForm({ initial, id, defaultCategory, defaultAgeGro
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">თარიღი</label>
-        <input className={FIELD_CLASS} value={form.event_date} onChange={(e) => update("event_date", e.target.value)} />
+        <input type="date" className={FIELD_CLASS} value={form.event_date} onChange={(e) => update("event_date", e.target.value)} />
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">

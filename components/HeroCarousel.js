@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 const INTERVAL_MS = 5000;
@@ -60,10 +59,24 @@ export default function HeroCarousel({ news, fullBleed = false, showThumbnails =
           {/* კითხვადობისთვის ბნელი გრადიენტი ტექსტის ქვეშ */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#14171c] via-[#14171c]/40 to-transparent" />
 
-          <Link href={`/news/${item.slug}`} className="absolute inset-0 flex flex-col justify-end">
+          <a
+            href={item.external_url ? item.external_url : `/news/${item.slug}`}
+            target={item.external_url ? "_blank" : undefined}
+            rel={item.external_url ? "noreferrer" : undefined}
+            className="absolute inset-0 flex flex-col justify-end"
+          >
             <div className="w-full px-5 md:px-8 pb-10 md:pb-14">
               <div className="max-w-2xl">
                 <div className="flex items-center gap-2.5 mb-3">
+                  {item.isLive && (
+                    <span className="flex items-center gap-1.5 bg-crimson text-white text-xs font-extrabold px-2.5 py-1 rounded-full uppercase">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+                      </span>
+                      ლაივი
+                    </span>
+                  )}
                   {item.medal && (
                     <span className="bg-gold text-white text-xs font-extrabold px-2.5 py-1 rounded-full">{item.medal}</span>
                   )}
@@ -74,7 +87,7 @@ export default function HeroCarousel({ news, fullBleed = false, showThumbnails =
                 </h2>
               </div>
             </div>
-          </Link>
+          </a>
         </div>
       ))}
 

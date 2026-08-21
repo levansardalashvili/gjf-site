@@ -16,6 +16,7 @@ function returnPath(slug) {
   if (slug.startsWith("federation-")) return "/admin/federation";
   if (slug.startsWith("judo-")) return "/admin/history";
   if (slug === "national-team-staff") return "/admin/teams";
+  if (slug === "calendar-yearly-pdf") return "/admin/events";
   return "/admin/pages";
 }
 

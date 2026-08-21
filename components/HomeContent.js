@@ -23,11 +23,13 @@ export default function HomeContent({ carouselNews, events, featuredProjects, pa
 
   return (
     <main>
-      {/* 1. Hero კონტეინერი */}
+      {/* 1. Hero კონტეინერი — mobile-ზე MainEventsPanel აქ დამალულია, ქვემოთ ცალკე ჩანს */}
       <section className="pt-6 max-w-[1400px] mx-auto px-5">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5 items-stretch">
           <HeroCarousel news={carouselNews} showThumbnails />
-          <MainEventsPanel events={mainEvents} />
+          <div className="hidden lg:block">
+            <MainEventsPanel events={mainEvents} />
+          </div>
         </div>
       </section>
 
@@ -46,6 +48,11 @@ export default function HomeContent({ carouselNews, events, featuredProjects, pa
 
       {/* 3. Portal (შედეგები/ადმინი) */}
       <PortalLinks links={portalLinks} />
+
+      {/* mobile-ზე მხოლოდ აქ ჩანს "მთავარი ღონისძიებები" — კალენდარი/portal-ის შემდეგ */}
+      <div className="lg:hidden max-w-[1400px] mx-auto px-5 pt-8">
+        <MainEventsPanel events={mainEvents} />
+      </div>
 
       {/* 4. სტატისტიკა */}
       <section className="py-10 max-w-[1400px] mx-auto px-5">

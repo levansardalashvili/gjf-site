@@ -24,6 +24,7 @@ const LINKS = [
 const EXTRA_LINKS = [
   { href: "/admin/partners", label: "პარტნიორები" },
   { href: "/admin/portal-links", label: "Portal ბლოკი" },
+  { href: "/admin/live-broadcast", label: "ლაივი (YouTube)" },
   { href: "/admin/users", label: "თანამშრომლები" },
   { href: "/admin/activity", label: "აქტივობა" },
   { href: "/admin/security", label: "უსაფრთხოება" },
