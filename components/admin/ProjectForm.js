@@ -1,4 +1,5 @@
 "use client";
+import { compressImage } from "@/lib/compressImage";
 import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -50,7 +51,7 @@ export default function ProjectForm({ initial, id }) {
     setUploading(true);
     setError("");
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", await compressImage(file));
     const res = await fetch("/api/upload", { method: "POST", body: formData });
     const data = await res.json();
     setUploading(false);
@@ -150,14 +151,14 @@ export default function ProjectForm({ initial, id }) {
 
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">მოკლე აღწერა <span className="text-gold">(ქართული — ბარათებზე ჩანს)</span></label>
-        <textarea className={FIELD_CLASS} rows={2} value={form.excerpt} onChange={(e) => update("excerpt", e.target.value)} />
+        <RichTextEditor value={form.excerpt} onChange={(html) => update("excerpt", html)} />
       </div>
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="block text-xs uppercase tracking-wide opacity-55">მოკლე აღწერა <span className="text-gold">(ინგლისური — არასავალდებულო)</span></label>
           <TranslateButton sourceText={form.excerpt} onTranslated={(t) => update("excerpt_en", t)} />
         </div>
-        <textarea className={FIELD_CLASS} rows={2} value={form.excerpt_en} onChange={(e) => update("excerpt_en", e.target.value)} />
+        <RichTextEditor value={form.excerpt_en} onChange={(html) => update("excerpt_en", html)} />
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">სრული ტექსტი <span className="text-gold">(ქართული)</span></label>

@@ -1,4 +1,5 @@
 "use client";
+import { compressImage } from "@/lib/compressImage";
 import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -35,7 +36,7 @@ export default function ResultForm({ initial, id, defaultCategory, defaultAgeGro
     setUploading(true);
     setError("");
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", await compressImage(file));
     const res = await fetch("/api/upload", { method: "POST", body: formData });
     const data = await res.json();
     setUploading(false);

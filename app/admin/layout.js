@@ -26,9 +26,10 @@ const EXTRA_LINKS = [
   { href: "/admin/portal-links", label: "Portal ბლოკი" },
   { href: "/admin/users", label: "თანამშრომლები" },
   { href: "/admin/activity", label: "აქტივობა" },
+  { href: "/admin/security", label: "უსაფრთხოება" },
 ];
 
-const PUBLIC_PAGES = ["/admin/login", "/admin/set-password"];
+const PUBLIC_PAGES = ["/admin/login", "/admin/set-password", "/admin/mfa-challenge"];
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();

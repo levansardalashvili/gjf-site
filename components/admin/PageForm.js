@@ -1,8 +1,10 @@
 "use client";
+import { compressImage } from "@/lib/compressImage";
 import Icon from "@/components/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "./Toast";
+import RichTextEditor from "./RichTextEditor";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -41,7 +43,7 @@ export default function PageForm({ initial, id }) {
     setUploading(true);
     setError("");
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", await compressImage(file));
 
     const res = await fetch("/api/upload", { method: "POST", body: formData });
     const data = await res.json();
@@ -90,7 +92,7 @@ export default function PageForm({ initial, id }) {
       </div>
       <div>
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">ტექსტი</label>
-        <textarea className={FIELD_CLASS} rows={12} value={form.body} onChange={(e) => update("body", e.target.value)} />
+        <RichTextEditor value={form.body} onChange={(html) => update("body", html)} />
       </div>
 
       <div>

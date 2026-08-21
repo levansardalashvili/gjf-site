@@ -1,4 +1,5 @@
 "use client";
+import { addLinkTargets } from "@/lib/richHtml";
 import Image from "next/image";
 import Trans from "./Trans";
 import ShareButtons from "./ShareButtons";
@@ -28,7 +29,7 @@ export default function NewsDetailContent({ item }) {
         ) : (
           <div className="aspect-video rounded-2xl bg-gradient-to-br from-[#2a2f38] to-[#1a1d23] mb-6" />
         )}
-        <div className="text-lg leading-relaxed opacity-90 rich-content mb-8" dangerouslySetInnerHTML={{ __html: body }} />
+        <div className="text-lg leading-relaxed opacity-90 rich-content mb-8" dangerouslySetInnerHTML={{ __html: addLinkTargets(body) }} />
         <div className="border-t border-line pt-6">
           <ShareButtons url={url} title={title} />
         </div>

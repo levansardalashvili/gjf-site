@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPages, getAllSocialLinks } from "@/lib/queries";
+import { stripHtml } from "@/lib/stripHtml";
 import SocialLinksManager from "@/components/admin/SocialLinksManager";
 
 export const revalidate = 0;
@@ -21,7 +22,7 @@ export default async function AdminContactPage() {
           <div key={p.id} className="flex items-center justify-between gap-4 px-5 py-4 border-b border-line last:border-0">
             <div className="min-w-0">
               <div className="text-xs opacity-50 font-mono">{p.slug}</div>
-              <div className="font-semibold truncate">{p.title}: <span className="font-normal opacity-70">{p.body}</span></div>
+              <div className="font-semibold truncate">{p.title}: <span className="font-normal opacity-70">{stripHtml(p.body)}</span></div>
             </div>
             <Link href={`/admin/pages/${p.id}`} className="text-sm text-gold font-semibold shrink-0">რედაქტირება</Link>
           </div>

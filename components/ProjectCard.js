@@ -2,12 +2,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n";
+import { stripHtml } from "@/lib/stripHtml";
 
 export default function ProjectCard({ slug, title, title_en, image_url, excerpt, excerpt_en, fixedWidth = false, index }) {
   const { t, lang } = useLanguage();
   const number = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
   const displayTitle = (lang === "en" && title_en) ? title_en : title;
-  const displayExcerpt = (lang === "en" && excerpt_en) ? excerpt_en : excerpt;
+  const displayExcerpt = stripHtml((lang === "en" && excerpt_en) ? excerpt_en : excerpt);
 
   return (
     <Link

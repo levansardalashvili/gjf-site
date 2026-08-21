@@ -2,6 +2,7 @@ import Icon from "@/components/Icon";
 import Trans from "@/components/Trans";
 import Reveal from "@/components/Reveal";
 import { getAllRegulations } from "@/lib/queries";
+import { stripHtml } from "@/lib/stripHtml";
 
 export const revalidate = 0;
 
@@ -31,7 +32,7 @@ export default async function FederationRegulationsPage() {
                   <Icon name="document" size={18} />
                 </div>
                 <h3 className="font-serif font-bold text-base leading-snug mb-2">{r.title}</h3>
-                {r.excerpt && <p className="text-sm opacity-60 leading-relaxed">{r.excerpt}</p>}
+                {r.excerpt && <p className="text-sm opacity-60 leading-relaxed">{stripHtml(r.excerpt)}</p>}
                 {r.file_url && <span className="inline-block text-sm font-bold text-gold mt-3">PDF ჩამოტვირთვა →</span>}
               </a>
             </Reveal>

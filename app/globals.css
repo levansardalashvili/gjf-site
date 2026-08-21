@@ -192,3 +192,15 @@ body {
 .rich-content p {
   margin-bottom: 0.75rem;
 }
+.rich-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 0.75rem 0;
+}
+
+/* editor-ის "ფაილის მიმაგრება" ღილაკი — Quill-ს ჩაშენებული აიქონა არ აქვს ამისთვის */
+.rich-text-editor .ql-file svg {
+  width: 16px;
+  height: 16px;
+}

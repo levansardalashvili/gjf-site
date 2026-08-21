@@ -1,5 +1,7 @@
+import { addLinkTargets } from "@/lib/richHtml";
 import Reveal from "./Reveal";
 import Icon from "./Icon";
+import { stripHtml } from "@/lib/stripHtml";
 
 export default function CalendarRegulations({ items }) {
   if (items.length === 0) return null;
@@ -15,7 +17,7 @@ export default function CalendarRegulations({ items }) {
         <Reveal key={r.id} className="mb-6">
           <div className="bg-crimson/10 border border-crimson/40 rounded-2xl p-6">
             <h3 className="font-serif font-bold text-lg text-gold mb-3 flex items-center gap-2"><Icon name="warning" size={19} />{r.title}</h3>
-            <p className="text-sm leading-relaxed opacity-90 mb-4">{r.body}</p>
+            <div className="text-sm leading-relaxed opacity-90 mb-4 rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(r.body) }} />
             {r.file_url && (
               <a
                 href={r.file_url}
@@ -46,7 +48,7 @@ export default function CalendarRegulations({ items }) {
                   <Icon name={r.force_download ? "download" : "document"} size={18} />
                 </div>
                 <h3 className="font-serif font-bold text-base leading-snug mb-2">{r.title}</h3>
-                {r.excerpt && <p className="text-sm opacity-60 leading-relaxed">{r.excerpt}</p>}
+                {r.excerpt && <p className="text-sm opacity-60 leading-relaxed">{stripHtml(r.excerpt)}</p>}
                 <span className="inline-block text-sm font-bold text-gold mt-3">
                   {r.force_download ? "ჩამოტვირთვა →" : "ნახვა →"}
                 </span>

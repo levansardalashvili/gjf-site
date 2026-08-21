@@ -1,3 +1,4 @@
+import { addLinkTargets } from "@/lib/richHtml";
 import Reveal from "@/components/Reveal";
 import Trans from "@/components/Trans";
 import Icon from "@/components/Icon";
@@ -32,9 +33,10 @@ export default async function StatutePage() {
               </div>
               <h1 className="font-serif font-bold text-3xl md:text-4xl mb-4">{page.title}</h1>
               {page.body && (
-                <p className="text-sm md:text-base opacity-65 leading-relaxed mb-7 max-w-xl mx-auto">
-                  {page.body}
-                </p>
+                <div
+                  className="text-sm md:text-base opacity-65 leading-relaxed mb-7 max-w-xl mx-auto rich-content"
+                  dangerouslySetInnerHTML={{ __html: addLinkTargets(page.body) }}
+                />
               )}
               {page.file_url ? (
                 <span className="inline-flex items-center gap-2 bg-crimson px-7 py-3.5 rounded-lg text-sm md:text-base font-bold">

@@ -1,4 +1,5 @@
 "use client";
+import { compressImage } from "@/lib/compressImage";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "./Toast";
@@ -32,7 +33,7 @@ export default function PortalLinkForm({ initial, id }) {
     setUploading(true);
     setError("");
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", await compressImage(file));
     const res = await fetch("/api/upload", { method: "POST", body: formData });
     const data = await res.json();
     setUploading(false);

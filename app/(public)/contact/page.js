@@ -1,4 +1,6 @@
+import { addLinkTargets } from "@/lib/richHtml";
 import { getPageBySlug, getAllSocialLinks } from "@/lib/queries";
+import { stripHtml } from "@/lib/stripHtml";
 import Trans from "@/components/Trans";
 import SocialIcons from "@/components/SocialIcons";
 import ContactForm from "@/components/ContactForm";
@@ -14,6 +16,9 @@ export default async function ContactPage() {
     getAllSocialLinks(),
   ]);
 
+  const emailText = stripHtml(email?.body);
+  const phoneText = stripHtml(phone?.body);
+
   return (
     <>
       <main className="max-w-[1400px] mx-auto px-5">
@@ -26,19 +31,19 @@ export default async function ContactPage() {
           {address && (
             <div className="bg-ink-2 border border-line rounded-2xl p-6">
               <div className="text-xs uppercase tracking-wide opacity-55 mb-2">{address.title}</div>
-              <p className="text-sm">{address.body}</p>
+              <div className="text-sm rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(address.body) }} />
             </div>
           )}
           {email && (
             <div className="bg-ink-2 border border-line rounded-2xl p-6">
               <div className="text-xs uppercase tracking-wide opacity-55 mb-2">{email.title}</div>
-              <a href={`mailto:${email.body}`} className="text-sm text-gold">{email.body}</a>
+              <a href={`mailto:${emailText}`} className="text-sm text-gold">{emailText}</a>
             </div>
           )}
           {phone && (
             <div className="bg-ink-2 border border-line rounded-2xl p-6">
               <div className="text-xs uppercase tracking-wide opacity-55 mb-2">{phone.title}</div>
-              <a href={`tel:${phone.body?.replace(/\s+/g, "")}`} className="text-sm text-gold">{phone.body}</a>
+              <a href={`tel:${phoneText?.replace(/\s+/g, "")}`} className="text-sm text-gold">{phoneText}</a>
             </div>
           )}
           <div className="bg-ink-2 border border-line rounded-2xl p-6">

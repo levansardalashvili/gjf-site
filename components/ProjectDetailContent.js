@@ -1,4 +1,5 @@
 "use client";
+import { addLinkTargets } from "@/lib/richHtml";
 import Image from "next/image";
 import Icon from "./Icon";
 import Trans from "./Trans";
@@ -36,7 +37,7 @@ export default function ProjectDetailContent({ project }) {
           </a>
         )}
 
-        <div className="leading-relaxed opacity-90 pb-16 rich-content" dangerouslySetInnerHTML={{ __html: body }} />
+        <div className="leading-relaxed opacity-90 pb-16 rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(body) }} />
       </article>
     </>
   );

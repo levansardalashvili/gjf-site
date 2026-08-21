@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { useLanguage } from "@/lib/i18n";
+import { stripHtml } from "@/lib/stripHtml";
 
 export default function ProjectsShowcase({ projects }) {
   const { t, lang } = useLanguage();
@@ -14,7 +15,7 @@ export default function ProjectsShowcase({ projects }) {
         const number = String(i + 1).padStart(2, "0");
         const imageOnRight = i % 2 === 1; // მონაცვლეობით: ლუწზე ფოტო მარჯვნივ
         const displayTitle = (lang === "en" && p.title_en) ? p.title_en : p.title;
-        const displayExcerpt = (lang === "en" && p.excerpt_en) ? p.excerpt_en : p.excerpt;
+        const displayExcerpt = stripHtml((lang === "en" && p.excerpt_en) ? p.excerpt_en : p.excerpt);
 
         return (
           <div

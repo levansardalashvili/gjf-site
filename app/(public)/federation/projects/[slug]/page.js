@@ -1,6 +1,7 @@
 import ProjectDetailContent from "@/components/ProjectDetailContent";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { getProjectBySlug } from "@/lib/queries";
+import { stripHtml } from "@/lib/stripHtml";
 import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
@@ -10,12 +11,13 @@ export const revalidate = 0;
 export async function generateMetadata({ params }) {
   const project = await getProjectBySlug(params.slug);
   if (!project) return {};
+  const description = stripHtml(project.excerpt)?.slice(0, 160);
   return {
     title: project.title,
-    description: project.excerpt,
+    description,
     openGraph: {
       title: project.title,
-      description: project.excerpt,
+      description,
       images: project.image_url ? [project.image_url] : [],
     },
   };

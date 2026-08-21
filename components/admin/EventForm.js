@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "./Toast";
 import { slugify } from "@/lib/slugify";
+import TranslateButton from "./TranslateButton";
+import RichTextEditor from "./RichTextEditor";
 
 const FIELD_CLASS = "w-full bg-ink border border-line rounded-lg px-3.5 py-2.5 text-sm outline-none focus:border-gold";
 
@@ -48,6 +50,7 @@ export default function EventForm({ initial, id, defaultCategory }) {
     location: initial?.location || "",
     category: initial?.category || defaultCategory || "international",
     description: initial?.description || "",
+    description_en: initial?.description_en || "",
     is_main_event: initial?.is_main_event || false,
   });
   const [saving, setSaving] = useState(false);
@@ -170,8 +173,15 @@ export default function EventForm({ initial, id, defaultCategory }) {
         <p className="text-xs opacity-45 mt-1.5">ტეგი ავტომატურად: {form.tag}</p>
       </div>
       <div>
-        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">აღწერა</label>
-        <textarea className={FIELD_CLASS} rows={4} value={form.description} onChange={(e) => update("description", e.target.value)} />
+        <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">აღწერა <span className="text-gold">(ქართული)</span></label>
+        <RichTextEditor value={form.description} onChange={(html) => update("description", html)} />
+      </div>
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="block text-xs uppercase tracking-wide opacity-55">აღწერა <span className="text-gold">(ინგლისური — არასავალდებულო)</span></label>
+          <TranslateButton sourceText={form.description} onTranslated={(t) => update("description_en", t)} />
+        </div>
+        <RichTextEditor value={form.description_en} onChange={(html) => update("description_en", html)} />
       </div>
 
       <label className="flex items-center gap-2.5 text-sm bg-ink border border-line rounded-lg px-3.5 py-3">

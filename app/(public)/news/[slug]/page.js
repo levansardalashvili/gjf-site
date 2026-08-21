@@ -3,6 +3,7 @@ import { stripHtml } from "@/lib/stripHtml";
 import NewsCard from "@/components/NewsCard";
 import NewsDetailContent from "@/components/NewsDetailContent";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
+import ArticleJsonLd from "@/components/ArticleJsonLd";
 import Trans from "@/components/Trans";
 import { notFound } from "next/navigation";
 
@@ -31,6 +32,7 @@ export default async function NewsDetailPage({ params }) {
 
   const allNews = await getAllNews();
   const related = allNews.filter((n) => n.slug !== item.slug).slice(0, 3);
+  const articleUrl = `${SITE_URL}/news/${item.slug}`;
 
   return (
     <>
@@ -38,8 +40,15 @@ export default async function NewsDetailPage({ params }) {
         items={[
           { name: "მთავარი", url: SITE_URL },
           { name: "სიახლეები", url: `${SITE_URL}/news` },
-          { name: item.title, url: `${SITE_URL}/news/${item.slug}` },
+          { name: item.title, url: articleUrl },
         ]}
+      />
+      <ArticleJsonLd
+        title={item.title}
+        description={stripHtml(item.body)?.slice(0, 300)}
+        imageUrl={item.image_url}
+        datePublished={item.created_at}
+        url={articleUrl}
       />
       <main className="max-w-3xl mx-auto px-5">
         <NewsDetailContent item={item} />
