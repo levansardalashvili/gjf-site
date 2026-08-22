@@ -1,5 +1,5 @@
 "use client";
-import { addLinkTargets } from "@/lib/richHtml";
+import { renderRichHtml } from "@/lib/richHtml";
 import Icon from "./Icon";
 import Trans from "./Trans";
 import { useLanguage } from "@/lib/i18n";
@@ -21,7 +21,7 @@ export default function EventDetailContent({ event }) {
           <div className="flex items-center gap-2"><Icon name="pin" size={15} />{event.location}</div>
         </div>
       </div>
-      {description && <div className="opacity-80 mb-16 rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(description) }} />}
+      {description && <div className="opacity-80 mb-16 rich-content" dangerouslySetInnerHTML={{ __html: renderRichHtml(description) }} />}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { addLinkTargets } from "@/lib/richHtml";
+import { renderRichHtml } from "@/lib/richHtml";
 import { getPageBySlug } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
@@ -16,7 +16,7 @@ export default async function TeamStaffPage() {
             <a href="/teams" className="hover:text-gold">ნაკრებები</a> / {page.title}
           </div>
           <h1 className="font-serif font-bold text-3xl md:text-4xl mb-5">{page.title}</h1>
-          <div className="pb-16 leading-relaxed opacity-90 rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(page.body) }} />
+          <div className="pb-16 leading-relaxed opacity-90 rich-content" dangerouslySetInnerHTML={{ __html: renderRichHtml(page.body) }} />
         </div>
       </main>
     </>

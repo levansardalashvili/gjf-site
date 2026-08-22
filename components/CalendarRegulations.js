@@ -1,4 +1,4 @@
-import { addLinkTargets } from "@/lib/richHtml";
+import { renderRichHtml } from "@/lib/richHtml";
 import Reveal from "./Reveal";
 import Icon from "./Icon";
 import { stripHtml } from "@/lib/stripHtml";
@@ -17,7 +17,7 @@ export default function CalendarRegulations({ items }) {
         <Reveal key={r.id} className="mb-6">
           <div className="bg-crimson/10 border border-crimson/40 rounded-2xl p-6">
             <h3 className="font-serif font-bold text-lg text-gold mb-3 flex items-center gap-2"><Icon name="warning" size={19} />{r.title}</h3>
-            <div className="text-sm leading-relaxed opacity-90 mb-4 rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(r.body) }} />
+            <div className="text-sm leading-relaxed opacity-90 mb-4 rich-content" dangerouslySetInnerHTML={{ __html: renderRichHtml(r.body) }} />
             {r.file_url && (
               <a
                 href={r.file_url}

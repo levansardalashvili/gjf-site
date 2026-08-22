@@ -1,4 +1,4 @@
-import { addLinkTargets } from "@/lib/richHtml";
+import { renderRichHtml } from "@/lib/richHtml";
 import Image from "next/image";
 import Trans from "@/components/Trans";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
@@ -67,7 +67,7 @@ export default async function AthletePage({ params }) {
                 </span>
               )}
             </div>
-            {athlete.bio && <div className="opacity-80 leading-relaxed rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(athlete.bio) }} />}
+            {athlete.bio && <div className="opacity-80 leading-relaxed rich-content" dangerouslySetInnerHTML={{ __html: renderRichHtml(athlete.bio) }} />}
           </div>
         </div>
 

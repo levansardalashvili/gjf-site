@@ -1,4 +1,4 @@
-import { addLinkTargets } from "@/lib/richHtml";
+import { renderRichHtml } from "@/lib/richHtml";
 import { getPageBySlug, getAllSocialLinks } from "@/lib/queries";
 import { stripHtml } from "@/lib/stripHtml";
 import Trans from "@/components/Trans";
@@ -31,7 +31,7 @@ export default async function ContactPage() {
           {address && (
             <div className="bg-ink-2 border border-line rounded-2xl p-6">
               <div className="text-xs uppercase tracking-wide opacity-55 mb-2">{address.title}</div>
-              <div className="text-sm rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(address.body) }} />
+              <div className="text-sm rich-content" dangerouslySetInnerHTML={{ __html: renderRichHtml(address.body) }} />
             </div>
           )}
           {email && (

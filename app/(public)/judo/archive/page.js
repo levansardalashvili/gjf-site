@@ -1,4 +1,4 @@
-import { addLinkTargets } from "@/lib/richHtml";
+import { renderRichHtml } from "@/lib/richHtml";
 import Icon from "@/components/Icon";
 import { getPageBySlug } from "@/lib/queries";
 import { notFound } from "next/navigation";
@@ -28,7 +28,7 @@ export default async function Page() {
             </a>
           )}
 
-          <div className="pb-16 leading-relaxed opacity-90 rich-content" dangerouslySetInnerHTML={{ __html: addLinkTargets(page.body) }} />
+          <div className="pb-16 leading-relaxed opacity-90 rich-content" dangerouslySetInnerHTML={{ __html: renderRichHtml(page.body) }} />
         </div>
       </main>
     </>
