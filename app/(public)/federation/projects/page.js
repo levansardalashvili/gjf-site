@@ -4,7 +4,7 @@ import ProjectsShowcase from "@/components/ProjectsShowcase";
 import Reveal from "@/components/Reveal";
 import { getAllProjects } from "@/lib/queries";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects();

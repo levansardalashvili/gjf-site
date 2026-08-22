@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function ResultDetailPage({ params }) {
   const result = await getResultById(params.id);

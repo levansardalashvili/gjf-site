@@ -2,7 +2,7 @@ import Trans from "@/components/Trans";
 import Reveal from "@/components/Reveal";
 import { getAllRegions } from "@/lib/queries";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function FederationRegionsPage() {
   const regions = await getAllRegions();

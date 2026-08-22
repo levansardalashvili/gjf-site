@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import { getAllRegulations } from "@/lib/queries";
 import { stripHtml } from "@/lib/stripHtml";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function FederationRegulationsPage() {
   const regulations = await getAllRegulations();

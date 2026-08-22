@@ -1,6 +1,6 @@
 import { getAllMedalRecords } from "@/lib/queries";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 const GROUPS = [
   { title: "ოლიმპიური თამაშები", keys: { gold: "olympic_gold", silver: "olympic_silver", bronze: "olympic_bronze" } },

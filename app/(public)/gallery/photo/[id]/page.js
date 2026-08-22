@@ -2,7 +2,7 @@ import AlbumGallery from "@/components/AlbumGallery";
 import { getGalleryAlbumById, getPhotosByAlbum } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function AlbumDetailPage({ params }) {
   const album = await getGalleryAlbumById(params.id);

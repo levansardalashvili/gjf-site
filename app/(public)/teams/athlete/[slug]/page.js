@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 const GROUP_KEY = { standart: "seniors", youth: "juniors", kids: "cadets", women: "women_bc" };
 

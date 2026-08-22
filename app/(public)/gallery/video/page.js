@@ -2,7 +2,7 @@ import Trans from "@/components/Trans";
 import VideoCard from "@/components/VideoCard";
 import { getGalleryByType } from "@/lib/queries";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function GalleryVideoPage() {
   const videos = await getGalleryByType("video");

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getAllGalleryAlbums, getAllGalleryItems } from "@/lib/queries";
 import Trans from "@/components/Trans";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function GalleryPhotoPage() {
   const albums = await getAllGalleryAlbums();

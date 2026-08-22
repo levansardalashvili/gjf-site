@@ -6,7 +6,7 @@ import { getTeamCategory } from "@/lib/teams";
 import { getTeamMembersByCategory } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export function generateMetadata({ params }) {
   const team = getTeamCategory(params.category);

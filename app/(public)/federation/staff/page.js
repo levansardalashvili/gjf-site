@@ -3,7 +3,7 @@ import Reveal from "@/components/Reveal";
 import Image from "next/image";
 import { getAllStaffMembers } from "@/lib/queries";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function FederationStaffPage() {
   const staff = await getAllStaffMembers();

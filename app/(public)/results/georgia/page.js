@@ -2,7 +2,7 @@ import ResultsTabs from "@/components/ResultsTabs";
 import { getResultsByCategory } from "@/lib/queries";
 import Trans from "@/components/Trans";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function ResultsGeorgiaPage() {
   const results = await getResultsByCategory("georgia");

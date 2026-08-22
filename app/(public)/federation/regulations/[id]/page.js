@@ -3,7 +3,7 @@ import Icon from "@/components/Icon";
 import { getRegulationById } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function RegulationDetailPage({ params }) {
   const regulation = await getRegulationById(params.id);

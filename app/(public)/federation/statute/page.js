@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 import { getPageBySlug } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function StatutePage() {
   const page = await getPageBySlug("federation-statute");
