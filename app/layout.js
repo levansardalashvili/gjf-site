@@ -4,6 +4,11 @@ import { Analytics } from "@vercel/analytics/react";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
+// ⚠️ განზრახ არ ვკითხულობთ აქ ენის cookie-ს (getServerLang()) — cookies()-ის
+// გამოძახება root layout-ში მთელ საიტს დინამიურ რენდერზე გადაიყვანდა (ISR/static
+// გენერაცია ყველა გვერდზე გაუქმდებოდა). ამის ნაცვლად, ცალკეულ დეტალურ
+// გვერდებზე ({slug} route-ები, რომლებიც ისედაც დინამიურია) ვკითხულობთ ენას
+// მათივე generateMetadata-ში.
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
