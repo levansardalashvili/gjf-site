@@ -32,8 +32,20 @@ Vercel-ის სერვერზე ცვლილებებს ვერ 
 NEXT_PUBLIC_SUPABASE_URL=<Project URL>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon public გასაღები>
 SUPABASE_SERVICE_ROLE_KEY=<service_role გასაღები>
-ADMIN_PASSWORD=<თვითონ შეარჩიე ძლიერი პაროლი>
 ```
+
+admin-ში შესვლა Supabase Auth-ით (ელფოსტა + პაროლი) ხდება — იხილე ქვემოთ
+„პირველი admin მომხმარებლის შექმნა" (ან, თუ ეს სექცია არ არსებობს, Supabase
+დაშბორდში **Authentication → Users → Add user**).
+
+სურვილისამებრ, თუ საიტს არა-ნაგულისხმევ დომენზე დებ:
+
+```
+NEXT_PUBLIC_SITE_URL=https://gjf.ge
+```
+
+ეს გამოიყენება sitemap.xml/robots.txt/RSS/JSON-LD-ში აბსოლუტური ბმულებისთვის —
+თუ არ დააყენებ, ნაგულისხმევად `https://gjf.ge` გამოიყენება.
 
 ### 3. გაშვება
 
@@ -43,7 +55,7 @@ npm run dev
 ```
 
 გახსენი `http://localhost:3000` — საიტი; `http://localhost:3000/admin` — admin პანელი
-(შეხვალ იმ პაროლით, რაც `.env.local`-ში ADMIN_PASSWORD-ად ჩაწერე).
+(შეხვალ Supabase-ში შექმნილი admin მომხმარებლის ელფოსტა/პაროლით).
 
 ## Admin პანელით სარგებლობა
 
@@ -60,7 +72,7 @@ npm run dev
 
 1. GitHub-ზე ატვირთე პროექტი (როგორც ადრე)
 2. Vercel-ზე პროექტის დაკავშირებისას, **Environment Variables** სექციაში
-   დაამატე იგივე 4 ცვლადი, რაც `.env.local`-შია
+   დაამატე იგივე ცვლადები, რაც `.env.local`-შია
 3. Deploy — admin პანელი პირდაპირ საჯარო დომენზეც იმუშავებს (`gjf.ge/admin`)
 
 ## სტრუქტურა
@@ -68,7 +80,7 @@ npm run dev
 - `lib/supabase.js` — Supabase კლიენტები (public + admin)
 - `lib/queries.js` — საჯარო გვერდების მონაცემთა წაკითხვის ფუნქციები
 - `supabase/migrations/` — ბაზის სქემა + საწყისი მონაცემები (იხ. იქაური README.md ისტორიისა და მომავალი პრაქტიკის შესახებ)
-- `middleware.js` — `/admin`-ის დაცვა პაროლით
+- `middleware.js` — `/admin`-ისა და `/api`-ის დაცვა (Supabase Auth სესია + MFA)
 - `app/admin/` — admin პანელის გვერდები
 - `app/api/` — CRUD API route-ები (მხოლოდ admin ფორმებისთვის)
 - `app/teams/`, `app/federation/` და სხვ. — ჯერ კიდევ სტატიკური/placeholder გვერდები
