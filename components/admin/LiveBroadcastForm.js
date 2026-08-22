@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { compressImage } from "@/lib/compressImage";
 import { useToast } from "./Toast";
 
@@ -78,7 +79,9 @@ export default function LiveBroadcastForm({ initial }) {
         <label className="block text-xs uppercase tracking-wide opacity-55 mb-1.5">ლაივის ფოტო (ერთხელ ატვირთე, ყოველთვის იგივე გამოიყენება)</label>
         {form.photo_url ? (
           <div>
-            <img src={form.photo_url} alt="" className="w-full aspect-video object-cover rounded-lg border border-line" />
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-line">
+              <Image src={form.photo_url} alt="" fill className="object-cover" />
+            </div>
             <button type="button" onClick={() => update("photo_url", "")} className="mt-2 text-xs text-crimson font-semibold">ფოტოს შეცვლა</button>
           </div>
         ) : (

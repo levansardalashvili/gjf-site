@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase-browser";
 import { useToast } from "@/components/admin/Toast";
 
@@ -109,7 +110,7 @@ export default function AdminSecurityPage() {
           </p>
           {qrCode && (
             <div className="bg-white p-3 rounded-lg inline-block mb-4">
-              <img src={qrCode} alt="QR კოდი" width={180} height={180} />
+              <Image src={qrCode} alt="QR კოდი" width={180} height={180} unoptimized />
             </div>
           )}
           <p className="text-xs opacity-50 mb-4 break-all">

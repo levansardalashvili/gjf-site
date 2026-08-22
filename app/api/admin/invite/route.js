@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminClient } from "@/lib/supabase";
+import { friendlyError } from "@/lib/friendlyError";
 
 export async function POST(request) {
   const { email } = await request.json();
@@ -15,7 +16,7 @@ export async function POST(request) {
   });
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: friendlyError(error.message) }, { status: 400 });
   }
 
   return NextResponse.json({ ok: true, user: data.user });

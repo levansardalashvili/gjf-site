@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminClient } from "@/lib/supabase";
+import { friendlyError } from "@/lib/friendlyError";
 import { createClient } from "@/lib/supabase-server";
 
 export async function DELETE(request, { params }) {
@@ -14,6 +15,6 @@ export async function DELETE(request, { params }) {
 
   const admin = getAdminClient();
   const { error } = await admin.auth.admin.deleteUser(params.id);
-  if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+  if (error) return NextResponse.json({ error: friendlyError(error.message) }, { status: 400 });
   return NextResponse.json({ ok: true });
 }

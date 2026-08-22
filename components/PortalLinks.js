@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function PortalLinks({ links }) {
   if (!links || links.length === 0) return null;
 
@@ -15,9 +17,8 @@ export default function PortalLinks({ links }) {
             className="flex items-center gap-5 px-6 py-8 hover:bg-ink/40 hover:-translate-y-0.5 transition-all duration-300"
           >
             {l.logo_url && (
-              <div className={`shrink-0 w-20 h-16 rounded-xl flex items-center justify-center p-3 ${bgClass[l.logo_bg] || ""}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={l.logo_url} alt={l.title} className="max-h-10 md:max-h-12 w-auto object-contain" />
+              <div className={`relative shrink-0 w-20 h-16 rounded-xl ${bgClass[l.logo_bg] || ""}`}>
+                <Image src={l.logo_url} alt={l.title} fill className="object-contain p-3" />
               </div>
             )}
             <div className="min-w-0">
