@@ -17,7 +17,7 @@ Vercel-ის სერვერზე ცვლილებებს ვერ 
 1. შედი [supabase.com](https://supabase.com)-ზე, დარეგისტრირდი უფასოდ (GitHub-ით შეიძლება)
 2. შექმენი ახალი პროექტი ("New Project")
 3. პროექტის დაშბორდში გახსენი **SQL Editor → New query**
-4. დააკოპირე ამ repo-ს ფაილის `supabase-schema.sql` მთელი შიგთავსი, ჩასვი და დააჭირე **Run**
+4. დააკოპირე ამ repo-ს ფაილის `supabase/migrations/supabase-schema.sql` მთელი შიგთავსი, ჩასვი და დააჭირე **Run**
    — ეს შექმნის ცხრილებს (news, events, clubs) და ჩაწერს საწყის მაგალითებს
 5. გახსენი **Project Settings → API** — იქ დაინახავ სამ მნიშვნელობას, რომლებიც შემდეგ ნაბიჯში დაგჭირდება:
    - `Project URL`
@@ -67,7 +67,7 @@ npm run dev
 
 - `lib/supabase.js` — Supabase კლიენტები (public + admin)
 - `lib/queries.js` — საჯარო გვერდების მონაცემთა წაკითხვის ფუნქციები
-- `supabase-schema.sql` — ბაზის სქემა + საწყისი მონაცემები
+- `supabase/migrations/` — ბაზის სქემა + საწყისი მონაცემები (იხ. იქაური README.md ისტორიისა და მომავალი პრაქტიკის შესახებ)
 - `middleware.js` — `/admin`-ის დაცვა პაროლით
 - `app/admin/` — admin პანელის გვერდები
 - `app/api/` — CRUD API route-ები (მხოლოდ admin ფორმებისთვის)
@@ -91,7 +91,7 @@ Admin-ში ახლა ასევე არის:
 - **ნაკრების შემადგენლობა** (`/admin/team-members`) — უფროსების/ახალგაზრდების/
   ჭაბუკების/ქალების როსტერის მართვა (წონითი კატეგორია + სახელი)
 
-ეს ორივე ცხრილი (`pages`, `team_members`) ემატება `supabase-schema.sql`-ის
+ეს ორივე ცხრილი (`pages`, `team_members`) ემატება `supabase/migrations/supabase-schema.sql`-ის
 ბოლოში — თუ ბაზა უკვე შექმენი, საკმარისია ამ ახალი ნაწილის ცალკე გაშვება
 Supabase SQL Editor-ში.
 
@@ -107,7 +107,7 @@ Supabase SQL Editor-ში.
 4. ჩართე **Public bucket** (რომ ატვირთული PDF-ები საჯაროდ ხელმისაწვდომი იყოს)
 5. **Create bucket**
 
-ასევე საჭიროა `supabase-schema.sql`-ის ბოლო ნაწილის (`file_url`, `file_name`
+ასევე საჭიროა `supabase/migrations/supabase-schema.sql`-ის ბოლო ნაწილის (`file_url`, `file_name`
 სვეტების დამატება `pages` ცხრილში) ხელახლა გაშვება SQL Editor-ში, თუ ბაზა
 ადრე შექმენი.
 
@@ -127,7 +127,7 @@ admin-ში, გვერდის რედაქტირებისას, 
 
 ფოტოს ატვირთვაც იმავე Storage bucket-ს იყენებს (`documents`), რაც PDF-ების
 ატვირთვას — თუ ის უკვე შექმენი, დამატებით არაფერია საჭირო. ასევე
-`supabase-schema.sql`-ის ბოლოში დამატებულია:
+`supabase/migrations/supabase-schema.sql`-ის ბოლოში დამატებულია:
 ```sql
 alter table news add column image_url text;
 ```
@@ -141,7 +141,7 @@ alter table news add column image_url text;
 
 **საწყისი მონაცემები** — 6 რეალური პროექტი, წამოღებული gjf.ge-ს ძველი
 საიტიდან (სათაურები, აღწერები, დოკუმენტების ბმულები) უკვე ჩადებულია
-`supabase-schema.sql`-ში.
+`supabase/migrations/supabase-schema.sql`-ში.
 
 **რომ ამუშავდეს**, საჭიროა SQL-ის ბოლო ნაწილის გაშვება (თუ ბაზა ადრე
 შექმენი) — ეს ქმნის `projects` ცხრილს, ტვირთავს საწყის მონაცემებს, და
@@ -162,7 +162,7 @@ alter table news add column image_url text;
 - **`/admin/gallery`** — ფოტო და ვიდეო გალერეა ერთად (ტიპის მიხედვით)
 - **კონტაქტის ინფორმაცია** — `/admin/pages`-შივეა (`მისამართი`, `ელფოსტა`, `სოც. ქსელები`)
 
-**რომ ამუშავდეს** — ახალი SQL ფაილი `supabase-schema-results-gallery-contact.sql`,
+**რომ ამუშავდეს** — ახალი SQL ფაილი `supabase/migrations/supabase-schema-results-gallery-contact.sql`,
 დააკოპირე მთლიანად და გაუშვი SQL Editor-ში.
 
 ამის შემდეგ, ჰედერის ნავიგაციაში absolut ყველა გვერდი (გარდა "მთავარი"სა
