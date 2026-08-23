@@ -44,14 +44,27 @@ export default function HeroCarousel({ news, fullBleed = false, showThumbnails =
           }`}
         >
           {item.image_url ? (
-            <Image
-              src={item.image_url}
-              alt={item.title}
-              fill
-              sizes="(max-width: 1024px) 100vw, 1100px"
-              priority={i === 0}
-              className={`object-cover ${i === active ? "ken-burns" : ""}`}
-            />
+            <>
+              {/* დაბუშული, გაშლილი ფონი — ჩარჩოს ბოლომდე ავსებს, ცარიელი ველების გარეშე */}
+              <Image
+                src={item.image_url}
+                alt=""
+                aria-hidden="true"
+                fill
+                sizes="(max-width: 1024px) 100vw, 1100px"
+                priority={i === 0}
+                className="object-cover scale-110 blur-2xl opacity-70"
+              />
+              {/* რეალური, დაუჭრელი ფოტო — მთლიანად ჩანს, ცენტრირებული */}
+              <Image
+                src={item.image_url}
+                alt={item.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1100px"
+                priority={i === 0}
+                className={`object-contain ${i === active ? "ken-burns" : ""}`}
+              />
+            </>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-[#2a2f38] to-[#1a1d23]" />
           )}
