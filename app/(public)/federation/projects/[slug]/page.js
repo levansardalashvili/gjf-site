@@ -1,7 +1,6 @@
 import ProjectDetailContent from "@/components/ProjectDetailContent";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
 import { getProjectBySlug } from "@/lib/queries";
-import { getServerLang } from "@/lib/getServerLang";
 import { stripHtml } from "@/lib/stripHtml";
 import { notFound } from "next/navigation";
 
@@ -12,15 +11,12 @@ export const revalidate = 60;
 export async function generateMetadata({ params }) {
   const project = await getProjectBySlug(params.slug);
   if (!project) return {};
-  const lang = getServerLang();
-  const title = (lang === "en" && project.title_en) ? project.title_en : project.title;
-  const excerpt = (lang === "en" && project.excerpt_en) ? project.excerpt_en : project.excerpt;
-  const description = stripHtml(excerpt)?.slice(0, 160);
+  const description = stripHtml(project.excerpt)?.slice(0, 160);
   return {
-    title,
+    title: project.title,
     description,
     openGraph: {
-      title,
+      title: project.title,
       description,
       images: project.image_url ? [project.image_url] : [],
     },
@@ -30,16 +26,14 @@ export async function generateMetadata({ params }) {
 export default async function ProjectDetailPage({ params }) {
   const project = await getProjectBySlug(params.slug);
   if (!project) notFound();
-  const lang = getServerLang();
-  const title = (lang === "en" && project.title_en) ? project.title_en : project.title;
 
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: lang === "en" ? "Home" : "მთავარი", url: SITE_URL },
-          { name: lang === "en" ? "Projects" : "პროექტები", url: `${SITE_URL}/federation/projects` },
-          { name: title, url: `${SITE_URL}/federation/projects/${project.slug}` },
+          { name: "მთავარი", url: SITE_URL },
+          { name: "პროექტები", url: `${SITE_URL}/federation/projects` },
+          { name: project.title, url: `${SITE_URL}/federation/projects/${project.slug}` },
         ]}
       />
       <main className="max-w-3xl mx-auto px-5">

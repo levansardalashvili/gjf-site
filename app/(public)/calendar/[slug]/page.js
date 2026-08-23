@@ -1,5 +1,4 @@
 import { getEventBySlug } from "@/lib/queries";
-import { getServerLang } from "@/lib/getServerLang";
 import { stripHtml } from "@/lib/stripHtml";
 import EventDetailContent from "@/components/EventDetailContent";
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd";
@@ -13,8 +12,7 @@ export const revalidate = 60;
 export async function generateMetadata({ params }) {
   const event = await getEventBySlug(params.slug);
   if (!event) return {};
-  const lang = getServerLang();
-  const description = stripHtml((lang === "en" && event.description_en) ? event.description_en : event.description)?.slice(0, 160);
+  const description = stripHtml(event.description)?.slice(0, 160);
   return {
     title: event.title,
     description,
@@ -27,19 +25,17 @@ export default async function EventDetailPage({ params }) {
   if (!event) notFound();
 
   const eventUrl = `${SITE_URL}/calendar/${event.slug}`;
-  const lang = getServerLang();
-  const description = (lang === "en" && event.description_en) ? event.description_en : event.description;
 
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: lang === "en" ? "Home" : "მთავარი", url: SITE_URL },
-          { name: lang === "en" ? "Calendar" : "კალენდარი", url: `${SITE_URL}/calendar` },
+          { name: "მთავარი", url: SITE_URL },
+          { name: "კალენდარი", url: `${SITE_URL}/calendar` },
           { name: event.title, url: eventUrl },
         ]}
       />
-      <SportsEventJsonLd event={event} url={eventUrl} description={stripHtml(description)?.slice(0, 300)} />
+      <SportsEventJsonLd event={event} url={eventUrl} description={stripHtml(event.description)?.slice(0, 300)} />
       <main className="max-w-3xl mx-auto px-5">
         <EventDetailContent event={event} />
       </main>

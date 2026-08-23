@@ -4,11 +4,14 @@ import { Analytics } from "@vercel/analytics/react";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://gjf.ge";
 
-// ⚠️ განზრახ არ ვკითხულობთ აქ ენის cookie-ს (getServerLang()) — cookies()-ის
-// გამოძახება root layout-ში მთელ საიტს დინამიურ რენდერზე გადაიყვანდა (ISR/static
-// გენერაცია ყველა გვერდზე გაუქმდებოდა). ამის ნაცვლად, ცალკეულ დეტალურ
-// გვერდებზე ({slug} route-ები, რომლებიც ისედაც დინამიურია) ვკითხულობთ ენას
-// მათივე generateMetadata-ში.
+// ⚠️ განზრახ არ ვკითხულობთ აქ (და არც news/[slug], calendar/[slug],
+// federation/projects/[slug]-ის generateMetadata-ში) ენის cookie-ს next/headers
+// cookies()-ით — ეს Next.js-ს აიძულებს, route-ი force-dynamic გახადოს (ISR/static
+// კეშირება მთლიანად გაუქმდება, თუნდაც revalidate მითითებული იყოს). თავად
+// გვერდის კონტენტი (title/body) მაინც სწორად ერთვება ინგლისურ ვერსიაზე —
+// კლიენტის მხარეს, useLanguage()-ით (იხ. lib/i18n.js) — უბრალოდ <title>/OG
+// tags აქ სტატიკურად, ქართულად რჩება (ისედაც crawler-ებს cookie არასდროს
+// მიაქვთ, ასე რომ OG preview ისედაც ყოველთვის ნაგულისხმევ ენაზე გამოჩნდებოდა).
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
