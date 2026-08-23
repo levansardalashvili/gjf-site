@@ -45,7 +45,6 @@ export default function HeroCarousel({ news, fullBleed = false, showThumbnails =
         >
           {item.image_url ? (
             <Image
-              key={i === active ? `active-${item.slug}` : item.slug}
               src={item.image_url}
               alt={item.title}
               fill
