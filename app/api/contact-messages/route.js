@@ -5,7 +5,7 @@ import { isRateLimited } from "@/lib/rateLimit";
 // საჯარო endpoint — ვინც საიტზეა, მას ავტორიზაცია არ სჭირდება ფორმის გასაგზავნად
 export async function POST(request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (isRateLimited(`contact:${ip}`, { windowMs: 60_000, max: 5 })) {
+  if (await isRateLimited(`contact:${ip}`, { windowMs: 60_000, max: 5 })) {
     return NextResponse.json({ error: "მოთხოვნები ძალიან ხშირია — ცოტა ხნის შემდეგ სცადე" }, { status: 429 });
   }
 
