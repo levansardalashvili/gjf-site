@@ -11,6 +11,9 @@ html {
 body {
   background: #ffffff;
   color: #201d1a;
+  /* დამცავი — არცერთმა ელემენტმა (გრძელი სიტყვა, URL, ცხრილი) არ უნდა
+     გამოიწვიოს მთელი გვერდის ჰორიზონტალური სქროლი მობილურზე */
+  overflow-x: hidden;
 }
 
 
@@ -173,6 +176,19 @@ body {
 /* საჯარო გვერდზე, rich text-ის რენდერი (ბოლდი, ბმულები, სიები) */
 .rich-content {
   line-height: 1.75;
+  /* გრძელი, გაუწყვეტელი სიტყვა/URL (admin-ის ტექსტში) ტეხავს ხაზს, ნაცვლად
+     იმისა, რომ მთელი გვერდი მობილურზე ჰორიზონტალურად გააჭიმოს */
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.rich-content pre {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.rich-content table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
 }
 .rich-content a {
   color: #7a2436;
