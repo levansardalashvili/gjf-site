@@ -1,5 +1,6 @@
 import CalendarPaginated from "@/components/CalendarPaginated";
-import { getEventsByCategory, getPageBySlug } from "@/lib/queries";
+import CalendarRegulations from "@/components/CalendarRegulations";
+import { getEventsByCategory, getPageBySlug, getAllCalendarRegulations } from "@/lib/queries";
 import Trans from "@/components/Trans";
 import Icon from "@/components/Icon";
 
@@ -8,6 +9,7 @@ export const revalidate = 60;
 export default async function CalendarGeorgiaPage() {
   const events = await getEventsByCategory("georgia");
   const yearlyPdf = await getPageBySlug("calendar-yearly-pdf");
+  const regulations = await getAllCalendarRegulations();
 
   return (
     <>
@@ -32,6 +34,8 @@ export default async function CalendarGeorgiaPage() {
         <div className="pb-16">
           <CalendarPaginated events={events} />
         </div>
+        <CalendarRegulations items={regulations} />
+        <div className="pb-16" />
       </main>
     </>
   );
